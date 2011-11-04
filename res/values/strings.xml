@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MensaActivity!</string>
+    <string name="app_name">Mensa</string>
+    <string name="mo">Mo</string>
+    <string name="di">Di</string>
+    <string name="mi">Mi</string>
+    <string name="don">Do</string>
+    <string name="fr">Fr</string>
+    <string name="open">Mo-Do 11:15 - 14:00 Uhr Fr  11:15 - 13:45 Uhr</string>
+    <string name="app_version">0.1.1</string>
+    	<string name="hp">http://www.floatec.de</string>
+	<string name="hplabel">Homepage:</string>
+	<string name="version_label">Version:</string>
+	<string name="name_label">Name:</string>
+	<string name="maillabel">E-Mail:</string>
+	<string name="mail">android@floatec.de</string>
+	<string name="author_label">Autoren:</string>
+		<string name="app_author">Patrick Müller</string>
+
+</resources>
