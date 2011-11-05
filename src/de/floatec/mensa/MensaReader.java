@@ -25,24 +25,27 @@ public class MensaReader {
 	private int week;
 	public boolean cache;
 	private String buffer = "";
-	private final static String HS_URL = "http://www.studentenwerk-mannheim.de/mensa/wo_hs.normal.php";// "http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php?+kw=43";
+	private final static String HS_URL = "http://www.studentenwerk-mannheim.de/mensa/wo_hs.normal.php?+kw=";// "http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php?+kw=43";
 	// String
 	// UNI_URL="http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php";
 	private final static int MENU_COUNT = 6;
 
 	
+	public String getDate(){
+		try{
+		return buffer.substring(buffer.indexOf("<div class='WoDate_hs'>")+"<div class='WoDate_hs'>".length(),buffer.indexOf("<div class='WoDate_hs'>")+"<div class='WoDate_hs'>".length()+19);
+		}catch (Exception e) {
+			return "Datum nicht verfügbar";// TODO: handle exception
+		}
+	}
+	
 	/**
-	 * @deprecated wird noch nicht verwendet
+	 *
 	 */
-	public void switchWeek(int weekOffset) {
-		int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
-		if (weekOffset < 0) {
-			weekOffset = 0;
-		}
-		if (weekOffset > 3) {
-			weekOffset = 3;
-		}
-		week = weekOfYear + weekOffset;
+	public void setWeekOffset(int weekOffset) {
+		
+		week =  weekOffset;
+		buffer="";//to reload the buffer
 	}
 	
 	/**
@@ -51,10 +54,10 @@ public class MensaReader {
 	 */
 	public int KW(){
 	
-		if( calendar.get(Calendar.DAY_OF_WEEK)==1){
-			return  calendar.get(Calendar.WEEK_OF_YEAR-1);
+		if( calendar.get(Calendar.DAY_OF_WEEK)==7){
+			return  calendar.get(Calendar.WEEK_OF_YEAR)+1+week;
 		}else{
-			return  calendar.get(Calendar.WEEK_OF_YEAR);
+			return  calendar.get(Calendar.WEEK_OF_YEAR)+week;
 		}
 	}
 
@@ -63,7 +66,8 @@ public class MensaReader {
 	 * @return gibt die zu parsende url zurück
 	 */
 	private String urlBuilder() {
-		return HS_URL;// +week;
+		String week= HS_URL+KW();// +week;
+		return week;
 	}
 /**
  * inti

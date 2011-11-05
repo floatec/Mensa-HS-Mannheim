@@ -9,7 +9,7 @@
     <string name="don">Do</string>
     <string name="fr">Fr</string>
     <string name="open">Mo-Do 11:15 - 14:00 Uhr Fr  11:15 - 13:45 Uhr</string>
-    <string name="app_version">0.1.1</string>
+    <string name="app_version">1.0.0</string>
     	<string name="hp">http://www.floatec.de</string>
 	<string name="hplabel">Homepage:</string>
 	<string name="version_label">Version:</string>
@@ -18,5 +18,9 @@
 	<string name="mail">android@floatec.de</string>
 	<string name="author_label">Autoren:</string>
 		<string name="app_author">Patrick Müller</string>
+		<string-array name="spinner">
+			<item >Aktuelle Woche</item>
+			<item >Nächste Woche</item>
+		</string-array>
 
 </resources>
