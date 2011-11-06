@@ -52,11 +52,12 @@ public class MensaActivity extends Activity {
 	 private static final SimpleDateFormat FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
 	private void setColorDefoult() {
-		buttonmo.setBackgroundColor(Color.GRAY);
-		buttondi.setBackgroundColor(Color.GRAY);
-		buttonmi.setBackgroundColor(Color.GRAY);
-		buttondon.setBackgroundColor(Color.GRAY);
-		buttonfr.setBackgroundColor(Color.GRAY);
+		
+		buttonmo.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_not_selected));
+		buttondi.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_not_selected));
+		buttonmi.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_not_selected));
+		buttondon.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_not_selected));
+		buttonfr.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_not_selected));
 	}
 
 	/** Called when the activity is first created. */
@@ -108,6 +109,7 @@ public class MensaActivity extends Activity {
 				reloadUi(0);
 				setColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_selected));
 			}
 		});
 		buttondi = (Button) findViewById(R.id.di);
@@ -116,6 +118,7 @@ public class MensaActivity extends Activity {
 				reloadUi(1);
 				setColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_selected));
 			}
 		});
 		buttonmi = (Button) findViewById(R.id.mi);
@@ -124,6 +127,7 @@ public class MensaActivity extends Activity {
 				reloadUi(2);
 				setColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_selected));
 			}
 		});
 		buttondon = (Button) findViewById(R.id.don);
@@ -132,6 +136,7 @@ public class MensaActivity extends Activity {
 				reloadUi(3);
 				setColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_selected));
 			}
 		});
 		buttonfr = (Button) findViewById(R.id.fr);
@@ -140,6 +145,7 @@ public class MensaActivity extends Activity {
 				reloadUi(4);
 				setColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
+				v.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_selected));
 			}
 		});
 		start();

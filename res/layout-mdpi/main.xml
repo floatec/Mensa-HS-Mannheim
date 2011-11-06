@@ -26,31 +26,31 @@
             android:id="@+id/mo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mo" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px"/>
+            android:text="@string/mo" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px" android:background="@drawable/btn_not_selected" android:minWidth="60px"/>
 
         <Button
             android:id="@+id/di"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/di" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px"/>
+            android:text="@string/di" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px" android:background="@drawable/btn_not_selected" android:minWidth="60px"/>
 
         <Button
             android:id="@+id/mi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mi" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px"/>
+            android:text="@string/mi" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px" android:background="@drawable/btn_not_selected" android:minWidth="60px"/>
 
         <Button
             android:id="@+id/don"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/don" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px"/>
+            android:text="@string/don" android:textSize="24px" android:textStyle="bold" android:layout_marginRight="2px" android:background="@drawable/btn_not_selected" android:minWidth="60px"/>
 
         <Button
             android:id="@+id/fr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fr" android:textSize="24px" android:textStyle="bold"/>
+            android:text="@string/fr" android:textSize="24px" android:textStyle="bold" android:background="@drawable/btn_not_selected" android:minWidth="60px"/>
 
     </LinearLayout>
 

@@ -54,7 +54,7 @@ public class MensaReader {
 	 */
 	public int KW(){
 	
-		if( calendar.get(Calendar.DAY_OF_WEEK)==7){
+		if( calendar.get(Calendar.DAY_OF_WEEK)==7||calendar.get(Calendar.DAY_OF_WEEK)==1){
 			return  calendar.get(Calendar.WEEK_OF_YEAR)+1+week;
 		}else{
 			return  calendar.get(Calendar.WEEK_OF_YEAR)+week;

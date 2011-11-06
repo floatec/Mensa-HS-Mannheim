@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/week"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/spinner"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:gravity="center">
+
+        <Button
+            android:id="@+id/mo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mo" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+
+        <Button
+            android:id="@+id/di"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/di" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+
+        <Button
+            android:id="@+id/mi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mi" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+
+        <Button
+            android:id="@+id/don"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/don" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+
+        <Button
+            android:id="@+id/fr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fr" android:textSize="40px" android:textStyle="bold" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ProgressBar
+                    android:id="@+id/progressBar1"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+       
+
+    </ScrollView>
+
+
+</LinearLayout>
