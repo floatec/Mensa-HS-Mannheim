@@ -14,10 +14,12 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int btn_not_selected=0x7f020000;
-        public static final int btn_selected=0x7f020001;
-        public static final int floatec=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
+        public static final int bg_header=0x7f020000;
+        public static final int bg_header_error=0x7f020001;
+        public static final int btn_not_selected=0x7f020002;
+        public static final int btn_selected=0x7f020003;
+        public static final int floatec=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
     }
     public static final class id {
         public static final int TableRow01=0x7f070012;

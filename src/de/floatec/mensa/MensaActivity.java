@@ -204,19 +204,20 @@ public class MensaActivity extends Activity {
 		}
 		//leert view
 		ll.removeAllViews();
+		TextView twTime = new TextView(this);
 		//für Mo-Do
 		if (day != 4) {
-			TextView tw = new TextView(this);
-			tw.setText("11:15 - 14:00 Uhr");
-			tw.setTextSize(12);
-			ll.addView(tw);
+			twTime.setText("11:15 - 14:00 Uhr");
+			
 			//für Fr
 		} else {
-			TextView tw = new TextView(this);
-			tw.setText("11:15 - 13:45 Uhr");
-			tw.setTextSize(12);
-			ll.addView(tw);
+			
+			twTime.setText("11:15 - 13:45 Uhr");
+			
 		}
+		twTime.setPadding(5, 1, 5, 1);
+		twTime.setTextSize(12);
+		ll.addView(twTime);
 		//tag auslesen
 		MenuList ml = mr.readDay(day);
 		TextView tw = new TextView(this);
@@ -224,19 +225,25 @@ public class MensaActivity extends Activity {
 		for (int i = 0; i < ml.getMenuCount(); i++) {
 			tw = new TextView(this);
 			tw.setText(ml.getMenu(i).getTitle());
-			tw.setTextSize(20);
+			tw.setTextSize(20); 
 			tw.setTextColor(Color.BLACK);
 			//Fehlerfallüberprüfung
 			if(ml.getMenu(i).getTitle().compareTo("ERROR")!=0){
 					tw.setTextColor(Color.BLACK);
 					tw.setBackgroundColor(Color.rgb(255, 127, 36));
+			 		tw.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_header));
+			 		tw.setPadding(5, 1, 5, 1);
 			}else{
 				tw.setTextColor(Color.WHITE);
 				tw.setBackgroundColor(Color.RED);
+				tw.setPadding(5, 1, 5, 1);
+				tw.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_header_error));
 			}
 			ll.addView(tw);
 			tw = new TextView(this);
 			tw.setText(ml.getMenu(i).getText() + " " + ml.getMenu(i).getPrice());
+			tw.setPadding(5, 1, 5, 1);
+			tw.setFocusable(true);
 			ll.addView(tw);
 		}
 		
