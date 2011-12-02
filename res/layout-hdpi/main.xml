@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
     android:orientation="vertical" >
-
+<LinearLayout android:layout_width="fill_parent"  android:orientation="vertical"
+        android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="5px"><LinearLayout
+    android:id="@+id/head"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5px"
+    android:gravity="center" >
+
+    <ImageButton
+      
+        android:background="@drawable/btn_selected"
+        android:id="@+id/oefnungszeiten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_recent_history"
+        android:layout_marginLeft="5px"
+        android:layout_marginRight="5px" />
+
     <Spinner
+        
+        android:layout_marginRight="5px"
+        android:paddingLeft="15px"
+        android:background="@drawable/btn_not_selected_long"
         android:id="@+id/week"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/spinner"/>
-
+        android:layout_height="fill_parent"
+        android:entries="@array/spinner"
+      
+        />
+</LinearLayout>
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
@@ -47,38 +71,40 @@
             android:text="@string/fr" android:textSize="40px" android:textStyle="bold" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
 
     </LinearLayout>
-
+</LinearLayout>
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
-
+
         <LinearLayout
-            android:id="@+id/content"
+            android:id="@+id/linearLayout3"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical" >
-
+
             <LinearLayout
-                android:id="@+id/linearLayout2"
+                android:id="@+id/content"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_height="fill_parent"
                 android:orientation="vertical" >
 
-                <ProgressBar
-                    android:id="@+id/progressBar1"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
+                    <ProgressBar
+                        android:id="@+id/progressBar1"
+                        style="?android:attr/progressBarStyleLarge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
             </LinearLayout>
-
         </LinearLayout>
 
-       
-
     </ScrollView>
-
 
 </LinearLayout>
