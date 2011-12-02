@@ -16,34 +16,39 @@ public final class R {
     public static final class drawable {
         public static final int bg_header=0x7f020000;
         public static final int bg_header_error=0x7f020001;
-        public static final int btn_not_selected=0x7f020002;
-        public static final int btn_selected=0x7f020003;
-        public static final int floatec=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
+        public static final int btn_dropdown_normal=0x7f020002;
+        public static final int btn_not_selected=0x7f020003;
+        public static final int btn_not_selected_long=0x7f020004;
+        public static final int btn_selected=0x7f020005;
+        public static final int floatec=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
     }
     public static final class id {
-        public static final int TableRow01=0x7f070012;
-        public static final int TableRow02=0x7f070015;
-        public static final int TextView01=0x7f070013;
-        public static final int TextView02=0x7f070014;
-        public static final int content=0x7f070008;
-        public static final int di=0x7f070003;
-        public static final int don=0x7f070005;
-        public static final int fr=0x7f070006;
-        public static final int hp=0x7f070011;
-        public static final int linearLayout1=0x7f070001;
-        public static final int linearLayout2=0x7f070009;
-        public static final int mi=0x7f070004;
-        public static final int mo=0x7f070002;
-        public static final int progressBar1=0x7f07000a;
-        public static final int scrollView1=0x7f070007;
-        public static final int tableRow1=0x7f07000f;
-        public static final int tableRow2=0x7f07000c;
-        public static final int test=0x7f07000b;
-        public static final int textView1=0x7f070010;
-        public static final int textView2=0x7f07000d;
-        public static final int textView3=0x7f07000e;
-        public static final int week=0x7f070000;
+        public static final int TableRow01=0x7f070015;
+        public static final int TableRow02=0x7f070018;
+        public static final int TextView01=0x7f070016;
+        public static final int TextView02=0x7f070017;
+        public static final int content=0x7f07000c;
+        public static final int di=0x7f070006;
+        public static final int don=0x7f070008;
+        public static final int fr=0x7f070009;
+        public static final int head=0x7f070001;
+        public static final int hp=0x7f070014;
+        public static final int linearLayout1=0x7f070004;
+        public static final int linearLayout2=0x7f07000d;
+        public static final int linearLayout3=0x7f07000b;
+        public static final int main=0x7f070000;
+        public static final int mi=0x7f070007;
+        public static final int mo=0x7f070005;
+        public static final int oefnungszeiten=0x7f070002;
+        public static final int progressBar1=0x7f07000e;
+        public static final int scrollView1=0x7f07000a;
+        public static final int tableRow1=0x7f070012;
+        public static final int tableRow2=0x7f07000f;
+        public static final int textView1=0x7f070013;
+        public static final int textView2=0x7f070010;
+        public static final int textView3=0x7f070011;
+        public static final int week=0x7f070003;
     }
     public static final class layout {
         public static final int main=0x7f030000;
