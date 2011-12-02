@@ -16,34 +16,46 @@ import java.util.GregorianCalendar;
 
 import org.apache.http.util.ByteArrayBuffer;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
+import android.text.SpannableString;
 import android.text.format.DateFormat;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.DownloadListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MensaActivity extends Activity {
-
+	private AdView adView;
 	private int activDay;
+	OnClickListener l;
+	ImageButton oeffnungszeiten;
 	private String weeks[];
 	Calendar calendar = Calendar.getInstance();
 	SharedPreferences prefs;
@@ -89,10 +101,23 @@ public class MensaActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		super.onCreate(savedInstanceState);
-
-		mr = new MensaReader();
 		setContentView(R.layout.main);
+		mr = new MensaReader();
 
+		// Create the adView
+		adView = new AdView(this, AdSize.BANNER,
+				"/3791134/ca-pub-2578266285326781/Test_Phone");
+
+		// Lookup your LinearLayout assuming it’s been given
+		// the attribute android:id="@+id/mainLayout"
+		LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout3);
+		
+		// Add the adView to it
+		if (prefs.getBoolean("add", false)) {
+		layout.addView(adView);
+		}
+		// Initiate a generic request to load it with an ad
+		adView.loadAd(new AdRequest());
 		/* init spinner */
 		weeks = new String[3];
 		Calendar myCalMo = Calendar.getInstance();
@@ -117,7 +142,9 @@ public class MensaActivity extends Activity {
 		Spinner s = (Spinner) findViewById(R.id.week);
 		ArrayAdapter adapter = new ArrayAdapter(this,
 				android.R.layout.simple_spinner_item, weeks);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(adapter);
+		
 		s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int pos, long id) {
@@ -183,8 +210,16 @@ public class MensaActivity extends Activity {
 			}
 		});
 		initContent();
-		// reloadUi(weekday);//erst nach button intialisierung
 
+		oeffnungszeiten = (ImageButton) findViewById(R.id.oefnungszeiten);
+		l = new OnClickListener() {
+
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showOeffnungszeiten();
+			}
+		};
+		oeffnungszeiten.setOnClickListener(l);
 	}
 
 	/**
@@ -257,7 +292,7 @@ public class MensaActivity extends Activity {
 		}
 		twTime.setPadding(5, 1, 5, 1);
 		twTime.setTextSize(12);
-		contentLayout.addView(twTime);
+		//contentLayout.addView(twTime);
 		// tag auslesen
 		MenuList ml = mr.readDay(day);
 		TextView tw = new TextView(this);
@@ -305,13 +340,29 @@ public class MensaActivity extends Activity {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Zusatzstoffe");
-
+		builder.setIcon(android.R.drawable.ic_menu_info_details);
 		builder.setMessage("KENNZEICHNUNGSPFLICHTIGE ZUSATZSTOFFE:	\nS Schweinefleisch	\nVeg Vegetarisch	\n1 mit Farbstoff	\n2 mit Konservierungsstoff	  \n3 mit Antioxidationsmittel	  \n4 mit Geschmacksverstärker	  \n5 geschwefelt\n6 geschwärzt	\n7 gewachst	\n8 mit Phosphat	\n9 mit Säuerungsmittel	\n10 enthält eine Phenylalaninquelle	\n13 enthält Natriumnitrit	\n14 Bio-Kontrollnummer: DE-ÖKO-007")
 
 		;
 		AlertDialog alert = builder.create();
 		alert.show();
 	}
+
+	public void showOeffnungszeiten() {
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Öffnungszeiten");
+		builder.setIcon(android.R.drawable.ic_menu_recent_history);
+		SpannableString s= new SpannableString("Mensa Hochschule Mannheim:\nGebäude J OG.1\nMontag - Donnerstag\n11:15 - 14:00 Uhr\nFreitag\n11:15 - 13:45 Uhr\n\nCafé Integral:\nGebäude J EG.\nMontag - Donnerstag\n7:45 - 16:00 Uhr\nFreitag\n7:45 - 15:30 Uhr\n\nCafe Sonnendeck:\nGebäude H OG. 7\nMontag - Donnerstag\n7:30 - 15:45 Uhr\nFreitag\n7:30 - 13:45 Uhr\nDer Raum ist zugänglich und die Kaffeemaschine dienstbereit von 7:30 - 18:30 Uhr.");
+		 s.setSpan(new StyleSpan(Typeface.BOLD), 0, 27, 0);
+		 s.setSpan(new StyleSpan(Typeface.BOLD), 115-8, 129-8, 0);
+		 s.setSpan(new StyleSpan(Typeface.BOLD), 214-16, 231-16, 0);
+		builder.setMessage(s);
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 
