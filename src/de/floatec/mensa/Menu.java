@@ -1,4 +1,7 @@
 package de.floatec.mensa;
+
+import java.util.ArrayList;
+
 /**
  * klasse für ein einzelnes menü
  * @author kcirta
@@ -8,7 +11,7 @@ public class Menu {
 	private String price="";
 	private String title="";
 	private String text="";
-	
+	private ArrayList<MenuPart> mp=new ArrayList<MenuPart>();
 	public String getPrice() {
 		return price;
 	}
@@ -25,6 +28,13 @@ public class Menu {
 		return text;
 	}
 	public void setText(String text) {
+		mp.clear();
+		String[]parts=text.split(" ");
+		for (int i = 0; i < parts.length; i++) {
+		 	MenuPart  part=new MenuPart(parts[i]);
+			mp.add(part);
+		}
+		
 		this.text = text;
 	}
 	public Menu(String title) {
