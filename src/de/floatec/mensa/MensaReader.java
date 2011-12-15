@@ -52,7 +52,13 @@ public class MensaReader {
 	 */
 	public void setWeekOffset(int weekOffset) {
 
-		week = weekOffset;
+		week = weekOffset;//old
+		calendar = Calendar.getInstance();
+		calendar.add(Calendar.WEEK_OF_YEAR, weekOffset);
+		if (calendar.get(Calendar.DAY_OF_WEEK) == 7
+				|| calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+			calendar.add(calendar.WEEK_OF_YEAR, 1) ;
+		} 	
 		buffer = "";// to reset the buffer
 	}
 
@@ -63,12 +69,8 @@ public class MensaReader {
 	 */
 	public int getKW() {
 
-		if (calendar.get(Calendar.DAY_OF_WEEK) == 7
-				|| calendar.get(Calendar.DAY_OF_WEEK) == 1) {
-			return calendar.get(Calendar.WEEK_OF_YEAR) + 1 + week;
-		} else {
-			return calendar.get(Calendar.WEEK_OF_YEAR) + week;
-		}
+		
+		return calendar.get(Calendar.WEEK_OF_YEAR) ;
 	}
 
 	/**
@@ -156,8 +158,15 @@ public class MensaReader {
 			ml.addmenu("ERROR", "Daten konnten nicht heruntergeladen werden.", "");
 			return;
 		}
+		if(buffer.indexOf(day)==-1){
+			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
+			return;
+		}
 		dayBuffer = buffer.substring(buffer.indexOf(day));
-
+		if(dayBuffer.indexOf("</tr>")==-1){
+			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
+			return;
+		}
 		dayBuffer = dayBuffer.substring(0, dayBuffer.indexOf("</tr>"));
 		// splittet in daten teile
 		String menus[] = dayBuffer

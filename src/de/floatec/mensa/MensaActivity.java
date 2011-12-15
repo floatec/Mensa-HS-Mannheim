@@ -106,14 +106,14 @@ public class MensaActivity extends Activity {
 
 		// Create the adView
 		adView = new AdView(this, AdSize.BANNER,
-				"/3791134/ca-pub-2578266285326781/Test_Phone");
+				"/14148428/ca-pub-3723428902598385/Phone_Android_Mannheim");
 
 		// Lookup your LinearLayout assuming it’s been given
 		// the attribute android:id="@+id/mainLayout"
 		LinearLayout layout = (LinearLayout) findViewById(R.id.linearLayout3);
 		
 		// Add the adView to it
-		if (prefs.getBoolean("add", false)) {
+		if (prefs.getBoolean("add", true)) {
 		layout.addView(adView);
 		}
 		// Initiate a generic request to load it with an ad
