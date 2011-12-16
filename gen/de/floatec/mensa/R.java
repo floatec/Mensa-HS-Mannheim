@@ -56,23 +56,22 @@ public final class R {
         public static final int ueber=0x7f030001;
     }
     public static final class string {
-        public static final int app_author=0x7f050010;
-        public static final int app_name=0x7f050001;
-        public static final int app_version=0x7f050008;
-        public static final int author_label=0x7f05000f;
-        public static final int di=0x7f050003;
-        public static final int don=0x7f050005;
-        public static final int fr=0x7f050006;
-        public static final int hello=0x7f050000;
-        public static final int hp=0x7f050009;
-        public static final int hplabel=0x7f05000a;
-        public static final int mail=0x7f05000e;
-        public static final int maillabel=0x7f05000d;
-        public static final int mi=0x7f050004;
-        public static final int mo=0x7f050002;
-        public static final int name_label=0x7f05000c;
-        public static final int open=0x7f050007;
-        public static final int version_label=0x7f05000b;
+        public static final int app_author=0x7f05000f;
+        public static final int app_name=0x7f050000;
+        public static final int app_version=0x7f050007;
+        public static final int author_label=0x7f05000e;
+        public static final int di=0x7f050002;
+        public static final int don=0x7f050004;
+        public static final int fr=0x7f050005;
+        public static final int hp=0x7f050008;
+        public static final int hplabel=0x7f050009;
+        public static final int mail=0x7f05000d;
+        public static final int maillabel=0x7f05000c;
+        public static final int mi=0x7f050003;
+        public static final int mo=0x7f050001;
+        public static final int name_label=0x7f05000b;
+        public static final int open=0x7f050006;
+        public static final int version_label=0x7f05000a;
     }
     public static final class xml {
         public static final int preferences=0x7f040000;
