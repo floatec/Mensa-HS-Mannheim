@@ -22,6 +22,7 @@ import com.google.ads.AdView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,8 +41,11 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.AnimationUtils;
 import android.webkit.DownloadListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,8 +54,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewFlipper;
 
-public class MensaActivity extends Activity {
+public class MensaActivity extends Activity implements OnTouchListener {
 	private AdView adView;
 	private int activDay;
 	OnClickListener l;
@@ -62,9 +68,48 @@ public class MensaActivity extends Activity {
 	LinearLayout contentLayout;
 	MensaReader mr;
 	private Button buttondi, buttonmo, buttonmi, buttondon, buttonfr;
-	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
-			"dd.MM.yyyy");
+	private static final SimpleDateFormat FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+	  private float downXValue;
+	
 
+	 public boolean onTouch(View arg0, MotionEvent arg1) {
+
+	        // Get the action that was done on this touch event
+	        switch (arg1.getAction())
+	        {
+	            case MotionEvent.ACTION_DOWN:
+	            {
+	                // store the X value when the user's finger was pressed down
+	                downXValue = arg1.getX();
+	                break;
+	            }
+
+	            case MotionEvent.ACTION_UP:
+	            {
+	                // Get the X value when the user released his/her finger
+	                float currentX = arg1.getX();            
+
+	                // going backwards: pushing stuff to the right
+	                if (downXValue+20 < currentX &&activDay<4)
+	                {
+	                	activDay=(activDay+1);
+	                }
+
+	                // going forwards: pushing stuff to the left
+	                if (downXValue-20 > currentX&&activDay>0)
+	                {
+	                	activDay=(activDay-1);	  
+	                	 
+	                }
+	                reloadUi();
+	                break;
+	            }
+	        }
+
+	        // if you return false, these actions will not be recorded
+	        return true;
+	    }
+	
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -82,7 +127,7 @@ public class MensaActivity extends Activity {
 	/**
 	 * set button color to default
 	 */
-	private void setColorDefoult() {
+	private void setButtonColorDefoult() {
 
 		buttonmo.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.btn_not_selected));
@@ -95,6 +140,44 @@ public class MensaActivity extends Activity {
 		buttonfr.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.btn_not_selected));
 	}
+	
+	/**
+	 * set button color to sleected
+	 */
+	private void setButtonColor(int day) {
+		switch (day){
+			case 0:
+			buttonmo.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.btn_selected));
+				break;
+			case 1:
+					buttondi.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.btn_selected));
+					break;
+			case 2:
+					buttonmi.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.btn_selected));
+					break;
+			case 3:
+					buttondon.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.btn_selected));
+					break;
+			case 4:
+						buttonfr.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.btn_selected));
+					break;
+				default:
+					Context context = getApplicationContext();
+					CharSequence text = "swype error";
+					int duration = Toast.LENGTH_SHORT;
+
+					Toast toast = Toast.makeText(context, text, duration);
+					toast.show();
+		
+			
+		}
+	}
+	
 
 	/** Called when the activity is first created. */
 	@Override
@@ -102,6 +185,9 @@ public class MensaActivity extends Activity {
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		 // Add these two lines
+        LinearLayout layMain = (LinearLayout) findViewById(R.id.linearLayout3);
+        layMain.setOnTouchListener((OnTouchListener) this);
 		mr = new MensaReader();
 
 		// Create the adView
@@ -163,7 +249,7 @@ public class MensaActivity extends Activity {
 		buttonmo.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				reloadUi(0);
-				setColorDefoult();
+				setButtonColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
 				v.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.btn_selected));
@@ -173,7 +259,7 @@ public class MensaActivity extends Activity {
 		buttondi.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				reloadUi(1);
-				setColorDefoult();
+				setButtonColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
 				v.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.btn_selected));
@@ -183,7 +269,7 @@ public class MensaActivity extends Activity {
 		buttonmi.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				reloadUi(2);
-				setColorDefoult();
+				setButtonColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
 				v.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.btn_selected));
@@ -193,7 +279,7 @@ public class MensaActivity extends Activity {
 		buttondon.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				reloadUi(3);
-				setColorDefoult();
+				setButtonColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
 				v.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.btn_selected));
@@ -203,7 +289,7 @@ public class MensaActivity extends Activity {
 		buttonfr.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				reloadUi(4);
-				setColorDefoult();
+				setButtonColorDefoult();
 				v.setBackgroundColor(Color.rgb(255, 127, 36));
 				v.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.btn_selected));
@@ -269,6 +355,8 @@ public class MensaActivity extends Activity {
 	 *            gewünschter tag(0-4)
 	 */
 	public void reloadUi(int day) {
+		setButtonColorDefoult();
+		setButtonColor(day);
 		activDay = day;
 
 		// wenn in eistellungen cache aktiv
@@ -321,7 +409,7 @@ public class MensaActivity extends Activity {
 			tw.setText(ml.getMenu(i).getText() + " " + ml.getMenu(i).getPrice());
 			tw.setPadding(5, 1, 5, 1);
 			tw.setFocusable(true);
-			registerForContextMenu(tw);
+			//registerForContextMenu(tw);
 			contentLayout.addView(tw);
 		}
 		View line = new View(this);
