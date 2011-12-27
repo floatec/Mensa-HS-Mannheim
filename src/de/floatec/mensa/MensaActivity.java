@@ -83,22 +83,22 @@ public class MensaActivity extends Activity implements OnTouchListener {
 	                downXValue = arg1.getX();
 	                break;
 	            }
-
+	            case MotionEvent.ACTION_CANCEL:
 	            case MotionEvent.ACTION_UP:
 	            {
 	                // Get the X value when the user released his/her finger
 	                float currentX = arg1.getX();            
 
 	                // going backwards: pushing stuff to the right
-	                if (downXValue+20 < currentX &&activDay<4)
+	                if (downXValue + 30 < currentX &&activDay>0)
 	                {
-	                	activDay=(activDay+1);
+	                	activDay=(activDay-1);
 	                }
 
 	                // going forwards: pushing stuff to the left
-	                if (downXValue-20 > currentX&&activDay>0)
+	                if (downXValue - 30 > currentX&&activDay<4)
 	                {
-	                	activDay=(activDay-1);	  
+	                	activDay=(activDay+1);	  
 	                	 
 	                }
 	                reloadUi();
