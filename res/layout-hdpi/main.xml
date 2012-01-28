@@ -3,10 +3,16 @@
     android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical" >
-<LinearLayout android:layout_width="fill_parent"  android:orientation="vertical"
-        android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="5px"><LinearLayout
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5px"
+    android:orientation="vertical" >
+
+<LinearLayout
     android:id="@+id/head"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -41,70 +47,168 @@
         android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="5px">
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/mo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mo" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+            android:text="@string/mo" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/di"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/di" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+            android:text="@string/di" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/mi"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mi" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+            android:text="@string/mi" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/don"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/don" android:textSize="40px" android:textStyle="bold" android:layout_marginRight="4px" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+            android:text="@string/don" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/fr"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/fr" android:textSize="40px" android:textStyle="bold" android:minWidth="90px" android:background="@drawable/btn_not_selected"/>
+            android:text="@string/fr" android:textSize="29px" android:textStyle="bold" android:background="@drawable/btn_not_selected"/>
 
     </LinearLayout>
 </LinearLayout>
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+
+<ViewFlipper
+    android:id="@+id/viewFlipper1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1" >
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
+    <LinearLayout
+       
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
+        <ScrollView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
             <LinearLayout
-                android:id="@+id/content"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:id="@+id/mov"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical" >
 
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <ProgressBar
-                        android:id="@+id/progressBar1"
-                        style="?android:attr/progressBarStyleLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
+        
 
-    </ScrollView>
+    </LinearLayout>
+<LinearLayout
+       
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ScrollView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+
+            <LinearLayout
+                android:id="@+id/div"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+        
+
+    </LinearLayout>
+        <LinearLayout
+       
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ScrollView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+
+            <LinearLayout
+                android:id="@+id/miv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+        
+
+    </LinearLayout>
+    <LinearLayout
+       
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ScrollView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+
+            <LinearLayout
+                android:id="@+id/dov"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+        
+
+    </LinearLayout>
+            <LinearLayout
+       
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ScrollView
+            
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+
+
+            <LinearLayout
+                android:id="@+id/frv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+        </ScrollView>
+        
+
+    </LinearLayout>
+        
+  </ViewFlipper>
 
 </LinearLayout>

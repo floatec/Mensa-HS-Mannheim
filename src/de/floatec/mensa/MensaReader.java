@@ -278,6 +278,8 @@ public class MensaReader {
 
 		} catch (IOException e) {
 			Log.d("Mensa", "Error: " + e);
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
 		return s;//return downloaded datas
 

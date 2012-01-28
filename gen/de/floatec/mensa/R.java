@@ -29,27 +29,27 @@ public final class R {
         public static final int TableRow02=0x7f070019;
         public static final int TextView01=0x7f070017;
         public static final int TextView02=0x7f070018;
-        public static final int content=0x7f07000c;
-        public static final int details=0x7f07000f;
         public static final int di=0x7f070006;
+        public static final int div=0x7f07000c;
         public static final int don=0x7f070008;
+        public static final int dov=0x7f07000e;
         public static final int fr=0x7f070009;
+        public static final int frv=0x7f07000f;
         public static final int head=0x7f070001;
         public static final int hp=0x7f070015;
         public static final int linearLayout1=0x7f070004;
-        public static final int linearLayout2=0x7f07000d;
-        public static final int linearLayout3=0x7f07000b;
         public static final int main=0x7f070000;
         public static final int mi=0x7f070007;
+        public static final int miv=0x7f07000d;
         public static final int mo=0x7f070005;
+        public static final int mov=0x7f07000b;
         public static final int oefnungszeiten=0x7f070002;
-        public static final int progressBar1=0x7f07000e;
-        public static final int scrollView1=0x7f07000a;
         public static final int tableRow1=0x7f070013;
         public static final int tableRow2=0x7f070010;
         public static final int textView1=0x7f070014;
         public static final int textView2=0x7f070011;
         public static final int textView3=0x7f070012;
+        public static final int viewFlipper1=0x7f07000a;
         public static final int week=0x7f070003;
     }
     public static final class layout {
