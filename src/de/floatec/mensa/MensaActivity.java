@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -126,12 +127,14 @@ public class MensaActivity extends Activity {
 		}
 	}
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		
 		setContentView(R.layout.main);
 		vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
 		LinearLayout layMain = (LinearLayout) findViewById(R.id.mov);
@@ -213,7 +216,15 @@ public class MensaActivity extends Activity {
 		layMain = (LinearLayout) findViewById(R.id.frv);
 		layMain.setOnTouchListener(ot);
 		mr = new MensaReader();
+		if(-1==Integer.parseInt(prefs.getString("mensa", "-1"))){
+			Toast.makeText(this, "Bitte wählen Sie ihre Mensa", Toast.LENGTH_LONG);
+			Intent intent_menu_settings = new Intent(this, preferences.class);
+			startActivity(intent_menu_settings);
 
+			
+		}
+		Log.i("mensa", prefs.getString("mensa", "0"));
+		mr.setMensa(Integer.parseInt(prefs.getString("mensa", "0")));
 		// intialize gui objekts
 
 		buttonmo = (Button) findViewById(R.id.mo);

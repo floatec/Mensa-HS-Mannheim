@@ -9,6 +9,8 @@ package de.floatec.mensa;
 
 public final class R {
     public static final class array {
+        public static final int mensa=0x7f060002;
+        public static final int mensa_label=0x7f060001;
         public static final int spinner=0x7f060000;
     }
     public static final class attr {

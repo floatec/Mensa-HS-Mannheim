@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Daten">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"><PreferenceCategory android:title="Daten">
         <CheckBoxPreference android:key="cache" android:summary="Daten nur einmal herunterladen" android:title="Cache" android:defaultValue="true"/>
-        <CheckBoxPreference android:title="Werbung" android:key="add" android:defaultValue="true"/>
+        <CheckBoxPreference android:title="Werbung" android:key="add" android:defaultValue="true" android:enabled="false"/>
+        <ListPreference android:title="Mensa" android:entries="@array/mensa_label" android:dialogTitle="Mensa" android:key="mensa" android:entryValues="@array/mensa"/>
     </PreferenceCategory>
+    
 
 </PreferenceScreen>

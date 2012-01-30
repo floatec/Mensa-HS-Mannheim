@@ -21,6 +21,8 @@ import android.util.Log;
  * 
  */
 public class MensaReader {
+	public static final int MENSA_HS=0,MENSA_UNI=1;
+	public static final String[] MENSAS={"Hochschule Mannheim","Mensa am Schloss"};
 	public static final int DAY_MO = 0;
 	public static final int DAY_DI = 1;
 	public static final int DAY_MI = 2;
@@ -28,14 +30,22 @@ public class MensaReader {
 	public static final int DAY_FR = 4;
 	Calendar calendar = Calendar.getInstance();
 	public MenuList ml;
+	private int mensa=0;
 	private int week;
 	public boolean cache;
 	private String buffer = "";
 	private final static String HS_URL = "http://www.studentenwerk-mannheim.de/mensa/wo_hs.normal.php?+kw=";// "http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php?+kw=43";
-
+	private final static String UNI_URL="http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php?+kw=";
 	// String
 	// UNI_URL="http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php";
 
+	public void setMensa(int mensa) {
+		this.mensa = mensa;
+	}
+	public String getMensa() {
+		return MENSAS[mensa];
+	}
+	
 	public String getDate() {
 		try {
 			return buffer.substring(buffer.indexOf("<div class='WoDate_hs'>")
@@ -79,7 +89,11 @@ public class MensaReader {
 	 * @return gibt die zu parsende url zurück
 	 */
 	private String urlBuilder() {
-		String url = HS_URL + getKW();// +week;
+		String url;
+		if(mensa==MENSA_UNI)
+		 url = UNI_URL + getKW();// +week;
+		else
+			url = HS_URL + getKW();// +week;
 		return url;
 	}
 
@@ -170,9 +184,9 @@ public class MensaReader {
 		dayBuffer = dayBuffer.substring(0, dayBuffer.indexOf("</tr>"));
 		// splittet in daten teile
 		String menus[] = dayBuffer
-				.split("</td><td class='inh_1a oben' width='125'>|<td class='inh_1a oben dickl' width='90'>|<td class='inh_1a oben links'>|<td class='inh_1a oben bo_re' nowrap='nowrap' width='33'>|<td class='inh_1a oben rechts' nowrap='nowrap' width='33'>|<td class='inh_1a oben' nowrap='nowrap' width='33'>");
+				.split("</td><td class='inh_1a oben' width='125'>|<td class='inh_1a oben'>|<td width='' class='inh_1a oben rechts'>|<td class='inh_1a oben dickl' width='90'>|<td class='inh_1a oben links'>|<td class='inh_1a oben bo_re' nowrap='nowrap' width='33'>|<td class='inh_1a oben rechts' nowrap='nowrap' width='33'>|<td class='inh_1a oben' nowrap='nowrap' width='33'>|<td class='inh_1a oben rechts' nowrap='nowrap'>|<td width='' class='inh_1a oben rechts dickl'>|</h5>");
 		// Log.i("Mensa", menus.length+dayBuffer);
-		if (menus.length != 13) {
+		if (menus.length%2 !=1 ) {
 			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
 			return;
 		}
@@ -181,12 +195,22 @@ public class MensaReader {
 			Log.i("Mensa", menus[i]);
 		}
 		// fügt menüs der liste hinzu
-		ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
-		ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
-		ml.addmenu("Menü 2", html2plain(menus[5]), html2plain(menus[6]));
-		ml.addmenu("Dessert", html2plain(menus[7]), html2plain(menus[8]));
-		ml.addmenu("Aktion", html2plain(menus[9]), html2plain(menus[10]));
-		ml.addmenu("Wok", html2plain(menus[11]), html2plain(menus[12]));
+		if(mensa==MENSA_HS){
+			ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
+			ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
+			ml.addmenu("Menü 2", html2plain(menus[5]), html2plain(menus[6]));
+			ml.addmenu("Aktion", html2plain(menus[9]), html2plain(menus[10]));
+			ml.addmenu("Wok", html2plain(menus[11]), html2plain(menus[12]));
+			ml.addmenu("Dessert", html2plain(menus[7]), html2plain(menus[8]));
+		}else{
+			ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
+			ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
+			ml.addmenu("Menü 2", html2plain(menus[5]), html2plain(menus[6]));
+			ml.addmenu("Grill", html2plain(menus[7]), html2plain(menus[8]));
+			ml.addmenu("Pasta", html2plain(menus[9]), html2plain(menus[10]));
+			ml.addmenu("Aktion", html2plain(menus[11]), html2plain(menus[12]));
+			
+		}
 
 	}
 
@@ -227,13 +251,13 @@ public class MensaReader {
 		String html=urlBuilder();
 		StringBuilder filebufer = new StringBuilder();
 		// cache
-		File file = new File("/data/data/de.floatec.mensa/KW" + getKW());
+		File file = new File("/data/data/de.floatec.mensa/"+mensa+"KW" + getKW());
 		/* if cache is avalible and it should be used */
 		if (file.exists() && useCache) {
 			try {
 				/*read cache*/
 				BufferedReader br = new BufferedReader(new FileReader(
-						"/data/data/de.floatec.mensa/KW" + getKW()));
+						"/data/data/de.floatec.mensa/"+mensa+"KW" + getKW()));
 				String line = br.readLine();
 				while (line != null) {
 					filebufer.append(line);
@@ -265,7 +289,7 @@ public class MensaReader {
 				/* safe to cache */
 
 				FileWriter testwriter = new FileWriter(
-						"/data/data/de.floatec.mensa/KW" + getKW(), false);
+						"/data/data/de.floatec.mensa/"+mensa+"KW" + getKW(), false);
 				BufferedWriter out = new BufferedWriter(testwriter);
 				out.write(s);
 				out.flush();

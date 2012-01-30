@@ -19,18 +19,30 @@ public class preferences extends PreferenceActivity  {
 
 
 		// Get the custom preference
-		
-		 Preference customPref = (Preference) findPreference("add");
-		 customPref.setOnPreferenceClickListener(new
-		 OnPreferenceClickListener() {
-		 
-		  public boolean onPreferenceClick(Preference preference) {
 
-			  if(preference.getKey()=="add"){
-				  showDialog(0);
-			  }
-			  return true; } });
-		 
+		Preference customPref = (Preference) findPreference("add");
+		customPref
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+
+						showDialog(0);
+
+						return true;
+					}
+				});
+
+		customPref = (Preference) findPreference("mensa");
+		customPref
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+
+						Toast.makeText(getBaseContext(), "Bitte Starten Sie die App neu", Toast.LENGTH_LONG);
+
+						return true;
+					}
+				});
 		
 	}
 	

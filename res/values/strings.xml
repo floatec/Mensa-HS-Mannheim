@@ -23,5 +23,13 @@
 			<item >Aktuelle Woche</item>
 			<item >Nächste Woche</item>
 		</string-array>
+		<string-array name="mensa_label">
+			<item >Hochschule Mannheim</item>
+			<item >Mensa am Schloss</item>
+		</string-array>
+		<string-array name="mensa">
+			<item >0</item>
+			<item >1</item>
+		</string-array>
 
 </resources>
