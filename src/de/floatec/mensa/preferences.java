@@ -1,50 +1,39 @@
 package de.floatec.mensa;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class preferences extends PreferenceActivity  {
+public class Preferences extends PreferenceActivity  {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
-
-
+		
+		setResult(Activity.RESULT_OK);
 		// Get the custom preference
 
-		Preference customPref = (Preference) findPreference("add");
-		customPref
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+		Preference customPref = (Preference) findPreference("mensa");
 
-					public boolean onPreferenceClick(Preference preference) {
+		if(-1==Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("mensa", "-1")))
+			Toast.makeText(this, "Bitte Wähle eine Mensa aus!", Toast.LENGTH_LONG).show();
 
-						showDialog(0);
-
-						return true;
-					}
-				});
-
-		customPref = (Preference) findPreference("mensa");
-		customPref
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-
-						Toast.makeText(getBaseContext(), "Bitte Starten Sie die App neu", Toast.LENGTH_LONG);
-
-						return true;
-					}
-				});
-		
+	
+    
+        
 	}
+	
 	
 	protected Dialog onCreateDialog(int id) {
 
@@ -65,5 +54,6 @@ public class preferences extends PreferenceActivity  {
 	    return b.create();
 
 	}
+	
 	
 }

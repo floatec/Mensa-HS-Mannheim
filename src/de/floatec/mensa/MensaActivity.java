@@ -1,4 +1,4 @@
-package de.floatec.mensa;
+package de.floatec.mensa; 
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -108,10 +108,14 @@ public class MensaActivity extends Activity {
 			break;
 		}
 	}
-
+	private void showProgressDIalog(){
+		pd = ProgressDialog.show(this, "Laden...",
+				"Daten werden Heruntergeladen", true, true);
+	}
 	private class RefrashDatas extends AsyncTask<String, Void, String> {
 		@Override
 		protected String doInBackground(String... urls) {
+			//showProgressDIalog();
 			if (urls[0].equals("CACHE")&& prefs.getBoolean("cache", true)) {
 				mr.refrashlist();
 			} else {
@@ -122,19 +126,40 @@ public class MensaActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
+			
 			loadUI();
-			pd.dismiss();
+			//pd.dismiss();
+			
 		}
+		@Override
+		protected void onCancelled() {
+			// TODO Auto-generated method stub
+			super.onCancelled();
+			//pd.dismiss();
+		}
+		
 	}
 
-	
+	@Override
+	protected void onResume() {
+		super.onRestart();
+		refrashDatas();
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		
+		prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+			
+			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+					String key) {
+				mr.setMensa(Integer.parseInt(prefs.getString("mensa", "0")));
+				refrashDatas();
+				
+			}
+		});
 		setContentView(R.layout.main);
 		vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
 		LinearLayout layMain = (LinearLayout) findViewById(R.id.mov);
@@ -217,10 +242,9 @@ public class MensaActivity extends Activity {
 		layMain.setOnTouchListener(ot);
 		mr = new MensaReader();
 		if(-1==Integer.parseInt(prefs.getString("mensa", "-1"))){
-			Toast.makeText(this, "Bitte wählen Sie ihre Mensa", Toast.LENGTH_LONG);
-			Intent intent_menu_settings = new Intent(this, preferences.class);
-			startActivity(intent_menu_settings);
-
+				Intent intent_menu_settings = new Intent(this, Preferences.class);
+				startActivityForResult(intent_menu_settings, 1);
+			
 			
 		}
 		Log.i("mensa", prefs.getString("mensa", "0"));
@@ -345,9 +369,8 @@ public class MensaActivity extends Activity {
 		refrashDatas(true);
 	}
 	void refrashDatas(boolean useCache) {
-
-		pd = ProgressDialog.show(this, "Laden...",
-				"Daten werden Heruntergeladen", true, true);
+		mr.setMensa(Integer.parseInt(prefs.getString("mensa", "0")));
+	
 		RefrashDatas task = new RefrashDatas();
 		if(useCache)
 
@@ -444,6 +467,7 @@ public class MensaActivity extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Öffnungszeiten");
 		builder.setIcon(android.R.drawable.ic_menu_recent_history);
+		
 		SpannableString s = new SpannableString(
 				"Mensa Hochschule Mannheim:\nGebäude J OG.1\nMontag - Donnerstag\n11:15 - 14:00 Uhr\nFreitag\n11:15 - 13:45 Uhr\n\nCafé Integral:\nGebäude J EG.\nMontag - Donnerstag\n7:45 - 16:00 Uhr\nFreitag\n7:45 - 15:30 Uhr\n\nCafe Sonnendeck:\nGebäude H OG. 7\nMontag - Donnerstag\n7:30 - 15:45 Uhr\nFreitag\n7:30 - 13:45 Uhr\nDer Raum ist zugänglich und die Kaffeemaschine dienstbereit von 7:30 - 18:30 Uhr.");
 		s.setSpan(new StyleSpan(Typeface.BOLD), 0, 27, 0);
@@ -504,8 +528,8 @@ public class MensaActivity extends Activity {
 			startActivity(intent_menu_ueber);
 			return true;
 		case 7:
-			Intent intent_menu_settings = new Intent(this, preferences.class);
-			startActivity(intent_menu_settings);
+			Intent intent_menu_settings = new Intent(this, Preferences.class);
+			startActivityForResult(intent_menu_settings, 1);
 			return true;
 		case 5:
 			showZusatzstoffe();
@@ -590,5 +614,17 @@ public class MensaActivity extends Activity {
 
 		}
 	}
-
+	@Override 
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {     
+	  super.onActivityResult(requestCode, resultCode, data); 
+	  switch(requestCode) { 
+	    case (1) : { 
+	      if (resultCode == Activity.RESULT_OK) { 
+	    	 // refrashDatas();
+	      // TODO Switch tabs using the index.
+	      } 
+	      break; 
+	    } 
+	  } 
+	}
 }

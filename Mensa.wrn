@@ -1,0 +1,4 @@
+targetSdkVersion:impact=1:10:found=13
+uses-intent-action:impact=1:android.intent.action.USER_PRESENT
+
+impact-summary: [5]=0; [4]=0; [3]=0; [2]=0; [1]=2;
