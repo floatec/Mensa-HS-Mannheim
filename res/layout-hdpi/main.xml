@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
-
+<LinearLayout android:id="@+id/ad" android:layout_width="fill_parent" android:layout_height="wrap_content"></LinearLayout>
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="5px">
+        android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="5px" >
 
         <Button
             android:layout_weight="1"
@@ -83,132 +83,111 @@
 
     </LinearLayout>
 </LinearLayout>
-
-<ViewFlipper
-    android:id="@+id/viewFlipper1"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1" >
 
-    <LinearLayout
-       
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+         >
 
-        <ScrollView
-            
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:id="@+id/mov"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-            </LinearLayout>
-        </ScrollView>
-        
-
-    </LinearLayout>
-<LinearLayout
-       
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ScrollView
-            
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-
-
-            <LinearLayout
-                android:id="@+id/div"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
-
-            </LinearLayout>
-        </ScrollView>
-        
-
-    </LinearLayout>
         <LinearLayout
-       
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ScrollView
-            
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-
-
-            <LinearLayout
-                android:id="@+id/miv"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content" >
 
-            </LinearLayout>
-        </ScrollView>
-        
+                <LinearLayout
+                    android:id="@+id/mov"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-       
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ScrollView
-            
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-
-
-            <LinearLayout
-                android:id="@+id/dov"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content" >
 
-            </LinearLayout>
-        </ScrollView>
-        
+                <LinearLayout
+                    android:id="@+id/div"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
-    </LinearLayout>
-            <LinearLayout
-       
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ScrollView
-            
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-
-
-            <LinearLayout
-                android:id="@+id/frv"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical" >
+                android:layout_height="wrap_content" >
 
-            </LinearLayout>
-        </ScrollView>
-        
+                <LinearLayout
+                    android:id="@+id/miv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/dov"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/frv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </ViewFlipper>
+
+<RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
         
-  </ViewFlipper>
+</RelativeLayout>
+
 
 </LinearLayout>

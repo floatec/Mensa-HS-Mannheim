@@ -13,6 +13,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -161,6 +162,15 @@ public class MensaActivity extends Activity {
 			}
 		});
 		setContentView(R.layout.main);
+		AdView adView;
+		adView = new AdView(this, AdSize.BANNER,
+				"/14148428/ca-pub-3723428902598385/Phone_Android_Mannheim");
+		// Lookup your LinearLayout assuming it’s been given
+		// the attribute android:id="@+id/mainLayout"
+
+		
+			((LinearLayout)findViewById(R.id.ad)).addView(adView);
+		adView.loadAd(new AdRequest());
 		vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
 		LinearLayout layMain = (LinearLayout) findViewById(R.id.mov);
 		OnTouchListener ot = new OnTouchListener() {
@@ -394,7 +404,7 @@ public class MensaActivity extends Activity {
 
 				tw = new TextView(this);
 				tw.setText(ml.getMenu(i).getTitle());
-				tw.setTextSize(20);
+				tw.setTextSize(12);
 				tw.setTextColor(Color.BLACK);
 				// Fehlerfallüberprüfung
 				if (ml.getMenu(i).getTitle().compareTo("ERROR") != 0) {
@@ -413,6 +423,9 @@ public class MensaActivity extends Activity {
 				}
 				contentLayout.addView(tw);
 				tw = new TextView(this);
+				tw.setBackgroundColor(Color.LTGRAY);
+				
+				tw.setTextSize(16);
 				tw.setText(ml.getMenu(i).getText() + " "
 						+ ml.getMenu(i).getPrice());
 				tw.setPadding(5, 1, 5, 1);
@@ -455,7 +468,7 @@ public class MensaActivity extends Activity {
 				contentLayout.addView(adView);
 			}
 			// Initiate a generic request to load it with an ad
-			adView.loadAd(new AdRequest());
+			//adView.loadAd(new AdRequest());
 			}catch (Exception e) {
 				// TODO: handle exception
 			}
