@@ -3,24 +3,28 @@
     android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#e7d5b5"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
+
 <LinearLayout android:id="@+id/ad" android:layout_width="fill_parent" android:layout_height="wrap_content"></LinearLayout>
+
 <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5px"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:visibility="visible" >
 
 <LinearLayout
     android:id="@+id/head"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5px"
-    android:gravity="center" >
+    android:gravity="right" >
 
     <ImageButton
-      
+      	android:visibility="gone"
         android:background="@drawable/btn_selected"
         android:id="@+id/oefnungszeiten"
         android:layout_width="wrap_content"
@@ -28,9 +32,13 @@
         android:src="@android:drawable/ic_menu_recent_history"
         android:layout_marginLeft="5px"
         android:layout_marginRight="5px" />
-
+<TextView 
+    android:id="@+id/mensa"
+    android:layout_height="wrap_content" android:layout_width="fill_parent" android:scrollHorizontally="false"  android:singleLine="false"
+	android:text="Mensa am Schloss" android:textSize="53px" android:textStyle="bold" android:background="@drawable/bg_header" android:textColor="#FFFFFF"
+    android:gravity="center"/>
     <Spinner
-        
+        android:visibility="gone"
         android:layout_marginRight="5px"
         android:paddingLeft="15px"
         android:background="@drawable/btn_not_selected_long"
@@ -41,10 +49,14 @@
       
         />
 </LinearLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:gravity="center" android:layout_marginBottom="5px" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5px"
+        android:gravity="center"
+        android:visibility="gone" >
 
         <Button
             android:layout_weight="1"
@@ -95,7 +107,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
+<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<TextView 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+	android:text="Montag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+    android:gravity="center"/>
+<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+    />
+</LinearLayout> 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -113,8 +132,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
-            <ScrollView
+<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<TextView 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+	android:text="Dienstag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+    android:gravity="center"/>
+<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+    />
+</LinearLayout>             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -130,9 +155,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <ScrollView
+            android:orientation="vertical" ><LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<TextView 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+	android:text="Mittwoch" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+    android:gravity="center"/>
+<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+    />
+</LinearLayout> 
+<ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
@@ -149,7 +180,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
+<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<TextView 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+	android:text="Donnerstag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+    android:gravity="center"/>
+<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+    />
+</LinearLayout> 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -167,7 +205,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
+<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+<TextView 
+    android:layout_height="wrap_content" android:layout_width="wrap_content" 
+	android:text="Freitag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+    android:gravity="center"/>
+<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+    />
+</LinearLayout> 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >

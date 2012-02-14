@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.util.Log;
 
@@ -42,8 +44,11 @@ public class MensaReader {
 		this.mensa = mensa;
 		this.buffer="";//clears buffer
 	}
-	public String getMensa() {
+	public String getMensaName() {
 		return MENSAS[mensa];
+	}
+	public int getMensa() {
+		return mensa;
 	}
 	
 	public String getDate() {
@@ -58,9 +63,9 @@ public class MensaReader {
 	}
 
 	/**
-	 *
+	 * setzt denn offset der auszulesende woche
 	 */
-	public void setWeekOffset(int weekOffset) {
+	public void setWeek(int weekOffset) {
 
 		week = weekOffset;//old
 		calendar = Calendar.getInstance();
@@ -189,6 +194,17 @@ public class MensaReader {
 			Log.i("Mensa", html2plain(menus[i]));
 			Log.i("Mensa", menus[i]);
 		}
+		for (int i = 1; i < menus.length-1; i=i+2) {
+			
+			Matcher matcher = Pattern.compile("[0-9]+,[0-9]{2} €").matcher(menus[i]+menus[i+1]);
+			
+			String price="";
+			if(matcher.find())
+			price=(menus[i]+menus[i+1]).substring(matcher.start(),matcher.end());
+	        menus[i] = (menus[i]+menus[i+1]).replace(price, "");
+	        menus[i+1] = price;
+	        
+		}
 		// fügt menüs der liste hinzu
 		if(mensa==MENSA_HS){
 			ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
@@ -217,6 +233,10 @@ if(mensa==MENSA_DHKT||mensa==MENSA_MHS){
 	ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
 	
 }
+	}
+	
+	public int getWeek() {
+		return week;
 	}
 
 	/**
