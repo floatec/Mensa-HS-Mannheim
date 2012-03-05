@@ -2,8 +2,9 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Einstellungen"><PreferenceCategory android:title="Daten">
         <CheckBoxPreference android:key="cache" android:summary="Daten nur einmal herunterladen" android:title="Cache" android:defaultValue="true"/>
         <ListPreference android:title="Mensa" android:entries="@array/mensa_label" android:dialogTitle="Mensa" android:key="mensa" android:entryValues="@array/mensa" android:summary="Wähle deine Mensa"/>
+        <CheckBoxPreference android:summary="(verlängert die Ladezeit!)" android:defaultValue="ture" android:title="Bewertung direkt anzeigen" android:key="rating"/>
     </PreferenceCategory>
-<PreferenceCategory android:title="Optionen">
+<PreferenceCategory android:title="Optionen" android:summary="(Menü Eintrag)">
     <CheckBoxPreference android:key="whatshouldieat" android:title="What sould I eat?" android:summary="Wenn du mal wieder nicht weißt was du essen sollst!(Menü Option; Neustart der APP erforderlich)"/>
 </PreferenceCategory>
     

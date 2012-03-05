@@ -1,7 +1,5 @@
 package de.floatec.mensa;
 
-import java.io.InputStream;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
@@ -10,13 +8,16 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
+import de.floatec.mensa.mensa.MensaReader;
+import de.floatec.mensa.mensa.MenuList;
+import de.floatec.mensa.mensa.RatingReader;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -24,30 +25,22 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.BufferType;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -214,6 +207,7 @@ public class MensaActivity extends Activity {
 		}
 
 	}
+	
 
 	@Override
 	protected void onResume() {
@@ -225,11 +219,11 @@ public class MensaActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// init Weekday
-		if (Mo.get(Mo.DAY_OF_WEEK) != Calendar.SUNDAY
-				&& Mo.get(Mo.DAY_OF_WEEK) != Calendar.SATURDAY)
-			Mo.add(Mo.DAY_OF_MONTH, -Mo.get(Mo.DAY_OF_WEEK) + 2);
+		if (Mo.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY
+				&& Mo.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY)
+			Mo.add(Calendar.DAY_OF_MONTH, -Mo.get(Calendar.DAY_OF_WEEK) + 2);
 		else
-			Mo.add(Mo.DAY_OF_MONTH, -Mo.get(Mo.DAY_OF_WEEK) + 2 + 7);
+			Mo.add(Calendar.DAY_OF_MONTH, -Mo.get(Calendar.DAY_OF_WEEK) + 2 + 7);
 		// activity init
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
@@ -246,6 +240,7 @@ public class MensaActivity extends Activity {
 
 		// init view
 		vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
+		vf.setOnTouchListener(ot);
 		LinearLayout layMain = (LinearLayout) findViewById(R.id.mov);
 		layMain.setOnTouchListener(ot);
 
@@ -300,7 +295,7 @@ public class MensaActivity extends Activity {
 					.getChildAt(day)).getChildAt(1)).getChildAt(0);
 			// Setzt datum
 			calDay = (Calendar) Mo.clone();
-			calDay.add(Mo.DAY_OF_MONTH, day + 7 * mr.getWeek());
+			calDay.add(Calendar.DAY_OF_MONTH, day + 7 * mr.getWeek());
 			((TextView) ((LinearLayout) ((LinearLayout) vf.getChildAt(day))
 					.getChildAt(0)).getChildAt(1)).setText(FORMAT.format(calDay
 					.getTime()));
@@ -313,6 +308,35 @@ public class MensaActivity extends Activity {
 				ll.setOrientation(LinearLayout.HORIZONTAL);
 				ll.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.bg_header));
+				Button ib = new Button(getBaseContext());
+				ib.setMaxWidth(2);
+				ib.setPadding(0, 0, 0, 0);
+				ib.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
+				
+				//ib.setBackgroundResource(R.drawable.btn_not_selected)
+				ib.setTag(ml.getMenu(i).getText());
+				
+				//ib.setBackgroundDrawable(null);
+				int rating=0;
+				if(prefs.getBoolean("rating", true)){
+					rating=(int)RatingReader.getShortRating(ml.getMenu(i).getText());
+				}
+				if(0==rating){
+					ib.setBackgroundResource(android.R.drawable.btn_star_big_off);
+				}else{
+					ib.setBackgroundResource(android.R.drawable.btn_star_big_on);
+					ib.setText(rating+"");
+					ib.setTextSize(10);
+					ib.setTypeface(Typeface.DEFAULT_BOLD);
+					ib.setTextColor(Color.DKGRAY);
+							
+				}
+				ib.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						showRating((String)v.getTag());
+					} 
+				});
+				ll.addView(ib);
 				tw = new TextView(this);
 				tw.setText(ml.getMenu(i).getTitle());
 				tw.setTextSize(14);
@@ -333,7 +357,7 @@ public class MensaActivity extends Activity {
 					tw.setTypeface(Typeface.DEFAULT_BOLD);
 					tw.setTextColor(Color.WHITE);
 					tw.setGravity(Gravity.RIGHT);
-					tw.setPadding(5, 1, 5, 1);
+					tw.setPadding(5, 5, 5, 5);
 					ll.addView(tw);
 				} else {
 					refrashButton = true;
@@ -347,14 +371,24 @@ public class MensaActivity extends Activity {
 
 				contentLayout.addView(ll);
 				tw = new TextView(this);
-				tw.setBackgroundColor(Color.LTGRAY);
 
 				tw.setTextSize(16);
 				tw.setText(ml.getMenu(i).getText());
 				tw.setPadding(5, 1, 5, 1);
 				tw.setFocusable(true);
+				/*tw.setOnClickListener(new OnClickListener() {
+					public void onClick(View arg0) {
+						showRating("test");
+					}
+						
+					});*/
 				// registerForContextMenu(tw);
-				contentLayout.addView(tw);
+				ll = new LinearLayout(getApplicationContext());
+				ll.setOrientation(LinearLayout.HORIZONTAL);
+				ll.setBackgroundColor(Color.LTGRAY);
+				
+				ll.addView(tw);
+				contentLayout.addView(ll);
 
 			}
 			View line = new View(this);
@@ -363,20 +397,20 @@ public class MensaActivity extends Activity {
 			contentLayout.addView(line);
 			tw = new TextView(this);
 			tw.setText("Änderungen vorbehalten!");
+			tw.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.MATCH_PARENT));
 			tw.setPadding(5, 1, 5, 1);
 			tw.setFocusable(true);
 			contentLayout.addView(tw);
-			ImageButton ib = new ImageButton(getBaseContext());
-			ib.setBackgroundResource(R.drawable.btn_not_selected);
-			ib.setImageResource(android.R.drawable.ic_menu_rotate);
-			ib.setOnClickListener(new OnClickListener() {
-
-				public void onClick(View v) {
-					refrashDatas();
-
-				}
-			});
+			
 			if (refrashButton) {
+				ImageButton ib = new ImageButton(getBaseContext());
+				ib.setBackgroundResource(R.drawable.btn_not_selected);
+				ib.setImageResource(android.R.drawable.ic_menu_rotate);
+				ib.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						refrashDatas();
+					} 
+				});
 				contentLayout.addView(ib);
 			}
 			try {
@@ -396,6 +430,12 @@ public class MensaActivity extends Activity {
 				// TODO: handle exception
 			}
 		}
+	}
+	public void showRating(String menu){
+		Intent intent_rating = new Intent(this,
+				RatingActivity.class);
+		intent_rating.putExtra("id", menu);
+		startActivity(intent_rating);
 	}
 
 	public void showOeffnungszeiten() {
@@ -442,6 +482,7 @@ public class MensaActivity extends Activity {
 		alert.show();
 	}
 
+	@Override
 	public boolean onCreateOptionsMenu(android.view.Menu menu) {
 
 		menu.add(0, MENU_ZUSATZSTOFFE, 0, "Zusatzstoffe").setIcon(
@@ -465,7 +506,7 @@ public class MensaActivity extends Activity {
 				android.R.drawable.ic_menu_send);
 		menu.add(0, MENU_DONATE, 0, "Spenden").setIcon(
 				android.R.drawable.ic_menu_view);
-		//menu.add(0, MENU_LAGEPLAN, 0, "Lageplan").setIcon(		android.R.drawable.ic_menu_directions);
+		menu.add(0, MENU_LAGEPLAN, 0, "Lageplan").setIcon(		android.R.drawable.ic_menu_directions);
 		menu.add(0, MENU_EXIT, 0, "Exit").setIcon(
 				android.R.drawable.ic_menu_close_clear_cancel);
 
@@ -473,6 +514,7 @@ public class MensaActivity extends Activity {
 
 	}
 
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent browser;
 		switch (item.getItemId()) {
@@ -547,38 +589,39 @@ public class MensaActivity extends Activity {
 		// http://maps.google.com/maps/api/staticmap?center=Mannheim%20luisenpark&zoom=13&size=512x512&markers=color:blue%7Clabel:A%7CHochschule%20Mannheim&markers=color:green%7Clabel:B%7CMannheim%20Schloss&markers=color:red%7Ccolor:red%7Clabel:C%7CHans-Thoma-Str.%2040%2068163%20Mannheim&markers=color:red%7Ccolor:red%7Clabel:D%7CK%C3%A4fertaler%20Stra%C3%9Fe%20258%20Mannheim&markers=color:red%7Ccolor:yellow%7Clabel:E%7CN7%20Mannheim&sensor=false
 		String s = "";
 		for (int i = 0; i < MensaReader.MENSAS.length; i++) {
-			s += ((char) (i + 'A')) + " " + MensaReader.MENSAS[i] + "\n";
+			s += ((char) (i + 'A')) + ") " + MensaReader.MENSAS[i] + "\n";
 		}
-	
-		LayoutInflater inflater = (LayoutInflater) this
-				.getSystemService(LAYOUT_INFLATER_SERVICE);
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.lageplan);
+        dialog.setTitle("Lageplan");
+        dialog.setCancelable(true);
+        dialog.show();
+        //there are a lot of settings, for dialog, check them all out!
 
-		View layout = inflater.inflate(R.layout.lageplan,
-				(ViewGroup) findViewById(R.id.root));
-		ImageView   image=(ImageView)findViewById(R.id.logo);
-		Drawable drawable = LoadImageFromWebOperations("http://maps.google.com/maps/api/staticmap?center=Mannheim%20luisenpark&zoom=13&size=512x512&markers=color:blue%7Clabel:A%7CHochschule%20Mannheim&markers=color:green%7Clabel:B%7CMannheim%20Schloss&markers=color:red%7Ccolor:red%7Clabel:C%7CHans-Thoma-Str.%2040%2068163%20Mannheim&markers=color:red%7Ccolor:red%7Clabel:D%7CK%C3%A4fertaler%20Stra%C3%9Fe%20258%20Mannheim&markers=color:red%7Ccolor:yellow%7Clabel:E%7CN7%20Mannheim&sensor=false");
-		image.setImageDrawable(drawable);
-		//TextView   tv=(TextView)findViewById(R.id.text);
-		//tv.setText(s);
-		AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        //set up text
+       try{
+        TextView text = (TextView) dialog.findViewById(R.id.textView1);
+        text.setText(s);
+       }catch (Exception e) {
+		
+	}
+try{
+        //set up image view
+        Drawable image = WebImage.ImageOperations(getBaseContext(),"http://maps.google.com/maps/api/staticmap?center=Mannheim%20luisenpark&zoom=13&size=912x912&markers=color:blue%7Clabel:A%7CHochschule%20Mannheim&markers=color:green%7Clabel:B%7CMannheim%20Schloss&markers=color:red%7Ccolor:red%7Clabel:C%7CHans-Thoma-Str.%2040%2068163%20Mannheim&markers=color:red%7Ccolor:purple%7Clabel:D%7CK%C3%A4fertaler%20Stra%C3%9Fe%20258%20Mannheim&markers=color:red%7Ccolor:yellow%7Clabel:E%7CN7%20Mannheim&sensor=false");
+        ImageView img = (ImageView) dialog.findViewById(R.id.ImageView01);
+        img.setImageDrawable(image);
+       
+}catch (Exception e) {
+}
 
-		adb.setView(layout);
-
-		adb.show();
+      
+        //now that the dialog is set up, it's time to show it    
+        
+		
 
 	}
-	private Drawable LoadImageFromWebOperations(String url)
-	{
-	try
-	{
-	InputStream is = (InputStream) new URL(url).getContent();
-	Drawable d = Drawable.createFromStream(is, "src name");
-	return d;
-	}catch (Exception e) {
-	System.out.println("Exc="+e);
-	return null;
-	}
-	 }
+
+	 
 	public void showWhatShouldIEat() {
 		MenuList list = mr.readDay(vf.getDisplayedChild());
 		int menu = new Random().nextInt(list.getMenuCount());
@@ -596,5 +639,10 @@ public class MensaActivity extends Activity {
 		((TextView) findViewById(R.id.mensa))
 				.setText(MensaReader.MENSAS[Mensa]);
 	}
-
+	public void next(View v) {
+	    vf.showNext();
+	}
+	public void previous(View v) {
+	    vf.showPrevious();
+	}
 }

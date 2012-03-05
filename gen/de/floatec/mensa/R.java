@@ -25,13 +25,20 @@ public final class R {
         public static final int btn_selected=0x7f020006;
         public static final int floatec=0x7f020007;
         public static final int ic_launcher=0x7f020008;
+        public static final int l=0x7f020009;
+        public static final int r=0x7f02000a;
     }
     public static final class id {
-        public static final int TableRow01=0x7f07001b;
-        public static final int TableRow02=0x7f07001e;
-        public static final int TextView01=0x7f07001c;
-        public static final int TextView02=0x7f07001d;
+        public static final int ImageView01=0x7f070001;
+        public static final int ScrollView01=0x7f070000;
+        public static final int TableRow01=0x7f070022;
+        public static final int TableRow02=0x7f070025;
+        public static final int TextView01=0x7f070023;
+        public static final int TextView02=0x7f070024;
         public static final int ad=0x7f070004;
+        public static final int button=0x7f07001b;
+        public static final int comment=0x7f07001a;
+        public static final int content=0x7f070018;
         public static final int di=0x7f07000b;
         public static final int div=0x7f070011;
         public static final int don=0x7f07000d;
@@ -39,9 +46,9 @@ public final class R {
         public static final int fr=0x7f07000e;
         public static final int frv=0x7f070014;
         public static final int head=0x7f070005;
-        public static final int hp=0x7f07001a;
+        public static final int hp=0x7f070021;
+        public static final int label=0x7f07001c;
         public static final int linearLayout1=0x7f070009;
-        public static final int logo=0x7f070001;
         public static final int main=0x7f070003;
         public static final int mensa=0x7f070007;
         public static final int mi=0x7f07000c;
@@ -49,20 +56,24 @@ public final class R {
         public static final int mo=0x7f07000a;
         public static final int mov=0x7f070010;
         public static final int oefnungszeiten=0x7f070006;
-        public static final int root=0x7f070000;
-        public static final int tableRow1=0x7f070018;
-        public static final int tableRow2=0x7f070015;
-        public static final int text=0x7f070002;
-        public static final int textView1=0x7f070019;
-        public static final int textView2=0x7f070016;
-        public static final int textView3=0x7f070017;
+        public static final int rating=0x7f070015;
+        public static final int rating1=0x7f070019;
+        public static final int ratingBar1=0x7f070016;
+        public static final int scrollView1=0x7f070017;
+        public static final int tableRow1=0x7f070020;
+        public static final int tableRow2=0x7f07001d;
+        public static final int textView1=0x7f070002;
+        public static final int textView2=0x7f07001e;
+        public static final int textView3=0x7f07001f;
         public static final int viewFlipper1=0x7f07000f;
         public static final int week=0x7f070008;
     }
     public static final class layout {
         public static final int lageplan=0x7f030000;
         public static final int main=0x7f030001;
-        public static final int ueber=0x7f030002;
+        public static final int rating=0x7f030002;
+        public static final int rating_item=0x7f030003;
+        public static final int ueber=0x7f030004;
     }
     public static final class string {
         public static final int app_author=0x7f05000f;

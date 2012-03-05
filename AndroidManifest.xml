@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.floatec.mensa"
-    android:versionCode="25" 
+    android:versionCode="27" 
     android:versionName="@string/app_version" android:installLocation="preferExternal">
 
     <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="13"/>
@@ -25,7 +25,7 @@
         <activity android:name=".Preferences"  android:theme="@android:style/Theme.Light"></activity>
         <activity android:name="com.google.ads.AdActivity"
                android:configChanges="touchscreen|keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
-        <activity android:name="RatingOverviewActivity"></activity>
+        <activity android:name="RatingActivity" android:theme="@android:style/Theme.Light" android:label="Bewertungen"></activity>
     </application>
 
 </manifest>

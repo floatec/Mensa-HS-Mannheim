@@ -4,14 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
 import android.widget.Toast;
 
 public class Preferences extends PreferenceActivity  {
@@ -24,7 +20,7 @@ public class Preferences extends PreferenceActivity  {
 		setResult(Activity.RESULT_OK);
 		// Get the custom preference
 
-		Preference customPref = (Preference) findPreference("mensa");
+		Preference customPref = findPreference("mensa");
 
 		if(-1==Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("mensa", "-1")))
 			Toast.makeText(this, "Bitte Wähle eine Mensa aus!", Toast.LENGTH_LONG).show();
@@ -35,6 +31,7 @@ public class Preferences extends PreferenceActivity  {
 	}
 	
 	
+	@Override
 	protected Dialog onCreateDialog(int id) {
 
 	    AlertDialog.Builder b = new AlertDialog.Builder(this);
