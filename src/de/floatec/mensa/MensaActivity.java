@@ -6,17 +6,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.internal.ca;
+//import com.google.ads.AdView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -24,34 +25,28 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.BufferType;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class MensaActivity extends Activity {
+    public boolean adViewHeightSet = false;
 	private static final int MENU_EXIT = 0, MENU_ZUSATZSTOFFE = 1,
 			MENU_EINSTELLUNGEN = 2, MENU_FEEDBACK_MENSA = 3,
 			MENU_FEEDBACK_APP = 4, MENU_REFRASH = 5, MENU_DONATE = 6,
@@ -101,7 +96,7 @@ public class MensaActivity extends Activity {
 						} else {
 							Toast.makeText(
 									getBaseContext(),
-									"Daten aus der Vergangenheit können nicht Abgerufen Werden.",
+									"Daten aus der Vergangenheit kï¿½nnen nicht Abgerufen Werden.",
 									Toast.LENGTH_SHORT).show();
 						}
 					}
@@ -124,7 +119,7 @@ public class MensaActivity extends Activity {
 							flipTo(0);
 						} else {
 							Toast.makeText(getBaseContext(),
-									"Daten sind noch nicht verfügbar.",
+									"Daten sind noch nicht verfï¿½gbar.",
 									Toast.LENGTH_SHORT).show();
 
 						}
@@ -160,7 +155,7 @@ public class MensaActivity extends Activity {
 	}
 
 	/**
-	 * ändert die woche
+	 * ï¿½ndert die woche
 	 * 
 	 * @param week
 	 */
@@ -189,10 +184,12 @@ public class MensaActivity extends Activity {
 	}
 
 	private class RefrashDatas extends AsyncTask<String, Void, String> {
-		@Override
+		private boolean cache =false;
+        @Override
 		protected String doInBackground(String... urls) {
+			cache=urls[0].equals("CACHE") && prefs.getBoolean("cache", true);
 			// showProgressDIalog();
-			if (urls[0].equals("CACHE") && prefs.getBoolean("cache", true)) {
+			if (cache) {
 				mr.refrashlist();
 			} else {
 				mr.refrashlistWithoutCache();
@@ -204,6 +201,8 @@ public class MensaActivity extends Activity {
 		protected void onPostExecute(String result) {
 			loadUI();
 			pd.dismiss();
+
+
 
 		}
 
@@ -238,12 +237,39 @@ public class MensaActivity extends Activity {
 		pd = ProgressDialog.show(this, "Laden...",
 				"Daten werden Heruntergeladen", true, true);
 		// init admob
-		AdView adView;
-		adView = new AdView(this, AdSize.BANNER,
-				"/14148428/ca-pub-3723428902598385/Phone_Android_Mannheim");
-		((LinearLayout) findViewById(R.id.ad)).addView(adView);
-		adView.loadAd(new AdRequest());
+		final AdView adView;
+		adView = new AdView(this);
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAdUnitId("/14148428/ca-pub-3723428902598385/Phone_Android_Mannheim");
 
+        adView.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (adViewHeightSet) return;
+                        adView.setVisibility(View.VISIBLE);
+                        LinearLayout adView = (LinearLayout) findViewById(R.id.ad);
+
+                       LinearLayout list = (LinearLayout) findViewById(R.id.content);
+
+                        RelativeLayout.LayoutParams params =
+                                new RelativeLayout.LayoutParams(
+                                        LayoutParams.MATCH_PARENT,
+                                        LayoutParams.MATCH_PARENT
+                                );
+
+                        params.setMargins(0, 0, 0,   adView.getHeight()+ 15);
+
+                        list.setLayoutParams(params);
+                        adViewHeightSet = true;
+                    }
+                });
+
+        if (prefs.getBoolean("add", true)) {
+            ((LinearLayout) findViewById(R.id.ad)).addView(adView);
+        }
+        // Initiate a generic request to load it with an ad
+        adView.loadAd(new AdRequest.Builder().build());
 		// init view
 		vf = (ViewFlipper) findViewById(R.id.viewFlipper1);
 		LinearLayout layMain = (LinearLayout) findViewById(R.id.mov);
@@ -281,11 +307,14 @@ public class MensaActivity extends Activity {
 		setMensa(Integer.parseInt(prefs.getString("mensa", "0")));
 		showProgressDIalog();
 		RefrashDatas task = new RefrashDatas();
-		if (useCache)
+		if (useCache) {
 
-			task.execute(new String[] { "CACHE" });
-		else
+            task.execute(new String[]{"CACHE"});
+            refrashDatas(false);
+
+        }else{
 			task.execute(new String[] { "NOCACHE" });
+        }
 
 	}
 
@@ -307,20 +336,23 @@ public class MensaActivity extends Activity {
 
 			// leert view
 			contentLayout.removeAllViews();
-			// gibt alle menüs aus
+			// gibt alle menï¿½s aus
 			for (int i = 0; i < ml.getMenuCount(); i++) {
 				LinearLayout ll = new LinearLayout(getApplicationContext());
 				ll.setOrientation(LinearLayout.HORIZONTAL);
-				ll.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.bg_header));
+                ll.setBackgroundColor(Color.WHITE);
+				//ll.setBackgroundDrawable(getResources().getDrawable(
+				//		R.drawable.bg_header));
 				tw = new TextView(this);
 				tw.setText(ml.getMenu(i).getTitle());
 				tw.setTextSize(14);
 				tw.setTypeface(Typeface.DEFAULT_BOLD);
-				tw.setTextColor(Color.WHITE);
-				// Fehlerfallüberprüfung
+				tw.setTextColor(0xe86931);
+				// Fehlerfallï¿½berprï¿½fung
 				if (ml.getMenu(i).getTitle().compareTo("ERROR") != 0) {
-					tw.setTextColor(Color.WHITE);
+					//tw.setTextColor(Color.WHITE);
+                    tw.setTextColor(Color.rgb(0xe8,0x69,0x31));
+                    tw.setBackgroundColor(Color.WHITE);
 					// tw.setBackgroundColor(Color.rgb(255, 127, 36));
 
 					tw.setPadding(5, 1, 5, 1);
@@ -331,7 +363,7 @@ public class MensaActivity extends Activity {
 					tw.setText(ml.getMenu(i).getPrice());
 					tw.setTextSize(14);
 					tw.setTypeface(Typeface.DEFAULT_BOLD);
-					tw.setTextColor(Color.WHITE);
+                    tw.setTextColor(Color.rgb(0xe8,0x69,0x31));
 					tw.setGravity(Gravity.RIGHT);
 					tw.setPadding(5, 1, 5, 1);
 					ll.addView(tw);
@@ -347,8 +379,8 @@ public class MensaActivity extends Activity {
 
 				contentLayout.addView(ll);
 				tw = new TextView(this);
-				tw.setBackgroundColor(Color.LTGRAY);
-
+				//tw.setBackgroundColor(Color.LTGRAY);
+                tw.setBackgroundColor(Color.WHITE);
 				tw.setTextSize(16);
 				tw.setText(ml.getMenu(i).getText());
 				tw.setPadding(5, 1, 5, 1);
@@ -358,11 +390,12 @@ public class MensaActivity extends Activity {
 
 			}
 			View line = new View(this);
-			line.setBackgroundColor(Color.LTGRAY);
-			line.setMinimumHeight(5);
+			//line.setBackgroundColor(Color.LTGRAY);
+			//line.setMinimumHeight(5);
 			contentLayout.addView(line);
 			tw = new TextView(this);
-			tw.setText("Änderungen vorbehalten!");
+			tw.setText("Ã„nderungen vorbehalten!");
+            tw.setBackgroundColor(Color.WHITE);
 			tw.setPadding(5, 1, 5, 1);
 			tw.setFocusable(true);
 			contentLayout.addView(tw);
@@ -381,14 +414,15 @@ public class MensaActivity extends Activity {
 			}
 			try {
 				AdView adView;
-				adView = new AdView(this, AdSize.BANNER,
-						"/14148428/ca-pub-3723428902598385/Phone_Android_Mannheim");
-				// Lookup your LinearLayout assuming it’s been given
+                adView = new AdView(this);
+                adView.setAdSize(AdSize.LEADERBOARD);
+                adView.setAdUnitId("/14148428/ca-pub-3723428902598385/Phone_Android_Mannheim");
+				// Lookup your LinearLayout assuming itï¿½s been given
 				// the attribute android:id="@+id/mainLayout"
 
 				// Add the adView to it
 				if (prefs.getBoolean("add", true)) {
-					contentLayout.addView(adView);
+					//contentLayout.addView(adView);
 				}
 				// Initiate a generic request to load it with an ad
 				// adView.loadAd(new AdRequest());
@@ -401,36 +435,36 @@ public class MensaActivity extends Activity {
 	public void showOeffnungszeiten() {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Öffnungszeiten");
+		builder.setTitle("Ã–ffnungszeiten");
 		builder.setIcon(android.R.drawable.ic_menu_recent_history);
-		SpannableString s = new SpannableString("Nicht verfügbar");
+		SpannableString s = new SpannableString("Nicht verfÃ¼gbar");
 
 		switch (mr.getMensa()) {
 		case MensaReader.MENSA_HS:
 			s = new SpannableString(
-					"Mensa Hochschule Mannheim:\nGebäude J OG.1\nMontag - Donnerstag\n11:15 - 14:00 Uhr\nFreitag\n11:15 - 13:45 Uhr\n\nCafé Integral:\nGebäude J EG.\nMontag - Donnerstag\n7:45 - 16:00 Uhr\nFreitag\n7:45 - 15:30 Uhr\n\nCafe Sonnendeck:\nGebäude H OG. 7\nMontag - Donnerstag\n7:30 - 15:45 Uhr\nFreitag\n7:30 - 13:45 Uhr\nDer Raum ist zugänglich und die Kaffeemaschine dienstbereit von 7:30 - 18:30 Uhr.");
+					"Mensa Hochschule Mannheim:\nGebÃ¤ude J OG.1\nMontag - Donnerstag\n11:15 - 14:00 Uhr\nFreitag\n11:15 - 13:45 Uhr\n\nCafe Integral:\nGebÃ¤ude J EG.\nMontag - Donnerstag\n7:45 - 16:00 Uhr\nFreitag\n7:45 - 15:30 Uhr\n\nCafe Sonnendeck:\nGebÃ¤ude H OG. 7\nMontag - Donnerstag\n7:30 - 15:45 Uhr\nFreitag\n7:30 - 13:45 Uhr\nDer Raum ist zugÃ¤nglich und die Kaffeemaschine dienstbereit von 7:30 - 18:30 Uhr.");
 			s.setSpan(new StyleSpan(Typeface.BOLD), 0, 27, 0);
 			s.setSpan(new StyleSpan(Typeface.BOLD), 115 - 8, 129 - 8, 0);
 			s.setSpan(new StyleSpan(Typeface.BOLD), 214 - 16, 231 - 16, 0);
 			break;
 		case MensaReader.MENSA_UNI:
 			s = new SpannableString(
-					"Mensa am Schloss\n\nÖffnungszeiten:\nMontag - Donnerstag\n10:00 - 16:00 Uhr\nFreitag\n10:00 - 15:00 Uhr\n\nMittagstisch:\nMontag - Donnerstag\n11:30 - 14:15 Uhr\nFreitag\n11:30 - 14:00 Uhr");
+					"Mensa am Schloss\n\nï¿½ffnungszeiten:\nMontag - Donnerstag\n10:00 - 16:00 Uhr\nFreitag\n10:00 - 15:00 Uhr\n\nMittagstisch:\nMontag - Donnerstag\n11:30 - 14:15 Uhr\nFreitag\n11:30 - 14:00 Uhr");
 			s.setSpan(new StyleSpan(Typeface.BOLD), 0, 16, 0);
 			break;
 		case MensaReader.MENSA_DHKT:
 			s = new SpannableString(
-					"Mensaria Wohlgelegen Duale Hochschule Käfertaler Straße\n\nÖffnungszeiten:\nMontag - Donnerstag\n8:30 - 15:30 Uhr\nFreitag\n8:30 - 15:15 Uhr\n\nMittagsmenüs\nMontag -  Freitag\n12:00 - 13:30 Uhr");
+					"Mensaria Wohlgelegen Duale Hochschule KÃ¤fertaler StraÃŸe\n\nÃ–ffnungszeiten:\nMontag - Donnerstag\n8:30 - 15:30 Uhr\nFreitag\n8:30 - 15:15 Uhr\n\nMittagsmenÃ¼s\nMontag -  Freitag\n12:00 - 13:30 Uhr");
 			s.setSpan(new StyleSpan(Typeface.BOLD), 0, 55, 0);
 			break;
 		case MensaReader.MENSA_DHMM:
 			s = new SpannableString(
-					"Mensaria DH Hans-Thoma-Straße\n\nÖffnungszeiten:\nMontag - Donnerstag\n8:00 - 16:00 Uhr\nFreitag\n8:00 - 15:00 Uhr");
+					"Mensaria DH Hans-Thoma-StraÃŸe\n\nÃ–ffnungszeiten:\nMontag - Donnerstag\n8:00 - 16:00 Uhr\nFreitag\n8:00 - 15:00 Uhr");
 			s.setSpan(new StyleSpan(Typeface.BOLD), 0, 30, 0);
 			break;
 		case MensaReader.MENSA_MHS:
 			s = new SpannableString(
-					"Cafeteria Musikhochschule\n\nÖffnungszeiten:\nMontag - Freitag\n9:00 - 15:30 Uhr\n\nMittagstisch:\nMontag - Freitag\n11:30 - 13:30 Uhr\n\nDie benachbarte Automatenstation steht täglich von 7:00 bis 22:00 Uhr zur Verfügung.");
+					"Cafeteria Musikhochschule\n\nÃ–ffnungszeiten:\nMontag - Freitag\n9:00 - 15:30 Uhr\n\nMittagstisch:\nMontag - Freitag\n11:30 - 13:30 Uhr\n\nDie benachbarte Automatenstation steht tÃ¤glich von 7:00 bis 22:00 Uhr zur VerfÃ¼gung.");
 			s.setSpan(new StyleSpan(Typeface.BOLD), 0, 25, 0);
 			break;
 		default:
@@ -452,12 +486,12 @@ public class MensaActivity extends Activity {
 
 		menu.add(0, MENU_EINSTELLUNGEN, 0, "Einstellungen").setIcon(
 				android.R.drawable.ic_menu_preferences);
-		menu.add(0, MENU_OEFFNUNGSZEITEN, 0, "Öffnungszeiten").setIcon(
+		menu.add(0, MENU_OEFFNUNGSZEITEN, 0, "Ã–ffnungszeiten").setIcon(
 				android.R.drawable.ic_menu_recent_history);
 		if (prefs.getBoolean("whatshouldieat", false))
 			menu.add(0, MENU_WHAT, 0, "What should I eat?").setIcon(
 					android.R.drawable.ic_menu_help);
-		menu.add(0, MENU_UEBER, 0, "Über").setIcon(
+		menu.add(0, MENU_UEBER, 0, "Ãœber").setIcon(
 				android.R.drawable.ic_menu_info_details);
 		menu.add(0, MENU_FEEDBACK_APP, 0, "Feedback zur App").setIcon(
 				android.R.drawable.ic_menu_send);
@@ -485,7 +519,7 @@ public class MensaActivity extends Activity {
 			startActivity(browser);
 			return true;
 		case MENU_FEEDBACK_MENSA:
-			// öffnet ie mensa feedback seite vom studenten werk
+			// ï¿½ffnet ie mensa feedback seite vom studenten werk
 			browser = new Intent(
 					Intent.ACTION_VIEW,
 					Uri.parse("http://www.studentenwerk-mannheim.de/egotec/Essen+_+Trinken/Ihr+Feedback-p-32.html"));
@@ -536,7 +570,7 @@ public class MensaActivity extends Activity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Zusatzstoffe");
 		builder.setIcon(android.R.drawable.ic_menu_info_details);
-		builder.setMessage("KENNZEICHNUNGSPFLICHTIGE ZUSATZSTOFFE:	\nS Schweinefleisch	\nVeg Vegetarisch	\n1 mit Farbstoff	\n2 mit Konservierungsstoff	  \n3 mit Antioxidationsmittel	  \n4 mit Geschmacksverstärker	  \n5 geschwefelt\n6 geschwärzt	\n7 gewachst	\n8 mit Phosphat	\n9 mit Säuerungsmittel	\n10 enthält eine Phenylalaninquelle	\n13 enthält Natriumnitrit	\n14 Bio-Kontrollnummer: DE-ÖKO-007")
+		builder.setMessage("KENNZEICHNUNGSPFLICHTIGE ZUSATZSTOFFE:	\nS Schweinefleisch	\nVeg Vegetarisch	\n1 mit Farbstoff	\n2 mit Konservierungsstoff	  \n3 mit Antioxidationsmittel	  \n4 mit GeschmacksverstÃ¤rker	  \n5 geschwefelt\n6 geschwÃ¼rzt	\n7 gewachst	\n8 mit Phosphat	\n9 mit Sï¿½uerungsmittel	\n10 enthï¿½lt eine Phenylalaninquelle	\n13 enthÃ¤lt Natriumnitrit	\n14 Bio-Kontrollnummer: DE-Ã–KO-007")
 
 		;
 		AlertDialog alert = builder.create();
@@ -544,7 +578,7 @@ public class MensaActivity extends Activity {
 	}
 
 	public void showLageplan() {
-		// http://maps.google.com/maps/api/staticmap?center=Mannheim%20luisenpark&zoom=13&size=512x512&markers=color:blue%7Clabel:A%7CHochschule%20Mannheim&markers=color:green%7Clabel:B%7CMannheim%20Schloss&markers=color:red%7Ccolor:red%7Clabel:C%7CHans-Thoma-Str.%2040%2068163%20Mannheim&markers=color:red%7Ccolor:red%7Clabel:D%7CK%C3%A4fertaler%20Stra%C3%9Fe%20258%20Mannheim&markers=color:red%7Ccolor:yellow%7Clabel:E%7CN7%20Mannheim&sensor=false
+		/*// http://maps.google.com/maps/api/staticmap?center=Mannheim%20luisenpark&zoom=13&size=512x512&markers=color:blue%7Clabel:A%7CHochschule%20Mannheim&markers=color:green%7Clabel:B%7CMannheim%20Schloss&markers=color:red%7Ccolor:red%7Clabel:C%7CHans-Thoma-Str.%2040%2068163%20Mannheim&markers=color:red%7Ccolor:red%7Clabel:D%7CK%C3%A4fertaler%20Stra%C3%9Fe%20258%20Mannheim&markers=color:red%7Ccolor:yellow%7Clabel:E%7CN7%20Mannheim&sensor=false
 		String s = "";
 		for (int i = 0; i < MensaReader.MENSAS.length; i++) {
 			s += ((char) (i + 'A')) + " " + MensaReader.MENSAS[i] + "\n";
@@ -564,7 +598,9 @@ public class MensaActivity extends Activity {
 
 		adb.setView(layout);
 
-		adb.show();
+		adb.show();*/
+        Toast.makeText(this,
+                "Diese Funktion ist momentan nicht verfÃ¼gbar ", Toast.LENGTH_LONG).show();
 
 	}
 	private Drawable LoadImageFromWebOperations(String url)

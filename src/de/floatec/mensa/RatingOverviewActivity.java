@@ -1,5 +1,5 @@
 package de.floatec.mensa;
-import com.google.ads.m;
+
 
 import android.R.anim;
 import android.app.ListActivity;

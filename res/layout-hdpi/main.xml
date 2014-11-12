@@ -3,236 +3,259 @@
     android:id="@+id/main"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#e7d5b5"
+    android:background="@drawable/bg_header"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-<LinearLayout android:id="@+id/ad" android:layout_width="fill_parent" android:layout_height="wrap_content"></LinearLayout>
-
-<LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5px"
-    android:orientation="vertical"
-    android:visibility="visible" >
 
-<LinearLayout
-    android:id="@+id/head"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="5px"
-    android:gravity="right" >
-
-    <ImageButton
-      	android:visibility="gone"
-        android:background="@drawable/btn_selected"
-        android:id="@+id/oefnungszeiten"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_recent_history"
-        android:layout_marginLeft="5px"
-        android:layout_marginRight="5px" />
-<TextView 
-    android:id="@+id/mensa"
-    android:layout_height="wrap_content" android:layout_width="fill_parent" android:scrollHorizontally="false"  android:singleLine="false"
-	android:text="Mensa am Schloss" android:textSize="53px" android:textStyle="bold" android:background="@drawable/bg_header" android:textColor="#FFFFFF"
-    android:gravity="center"/>
-    <Spinner
-        android:visibility="gone"
-        android:layout_marginRight="5px"
-        android:paddingLeft="15px"
-        android:background="@drawable/btn_not_selected_long"
-        android:id="@+id/week"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:entries="@array/spinner"
-      
-        />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:textAlignment="center">
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5px"
-        android:gravity="center"
-        android:visibility="gone" >
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/mo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mo" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/di"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/di" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/mi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mi" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/don"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/don" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
-
-        <Button
-            android:layout_weight="1"
-            android:id="@+id/fr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fr" android:textSize="29px" android:textStyle="bold" android:background="@drawable/btn_not_selected"/>
-
-    </LinearLayout>
-</LinearLayout>
-
-
-    <ViewFlipper
-        android:id="@+id/viewFlipper1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         >
+        <LinearLayout android:id="@+id/ad" android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textAlignment="center"
+            android:visibility="gone"></LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-<TextView 
-    android:layout_height="wrap_content" android:layout_width="wrap_content" 
-	android:text="Montag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
-    android:gravity="center"/>
-<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
-    />
-</LinearLayout> 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+            android:layout_marginBottom="5px"
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:background="@drawable/bg_header"
+            android:layout_marginTop="-5px"
+            android:id="@+id/content">
 
-                <LinearLayout
-                    android:id="@+id/mov"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-<TextView 
-    android:layout_height="wrap_content" android:layout_width="wrap_content" 
-	android:text="Dienstag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
-    android:gravity="center"/>
-<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
-    />
-</LinearLayout>             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+            android:layout_marginBottom="0px"
+            android:gravity="right" >
 
-                <LinearLayout
-                    android:id="@+id/div"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                </LinearLayout>
-            </ScrollView>
+            <ImageButton
+                  android:visibility="gone"
+                android:background="@drawable/btn_selected"
+                android:id="@+id/oefnungszeiten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_recent_history"
+                android:layout_marginLeft="5px"
+                android:layout_marginRight="5px" />
+        <TextView
+            android:id="@+id/mensa"
+            android:layout_height="wrap_content" android:layout_width="fill_parent" android:scrollHorizontally="false"  android:singleLine="false"
+            android:text="Mensa am Schloss" android:textSize="53px" android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:paddingBottom="-10px" />
+            <Spinner
+                android:visibility="gone"
+                android:layout_marginRight="5px"
+                android:paddingLeft="15px"
+                android:background="@drawable/btn_not_selected_long"
+                android:id="@+id/week"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:entries="@array/spinner"
+
+                />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" ><LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-<TextView 
-    android:layout_height="wrap_content" android:layout_width="wrap_content" 
-	android:text="Mittwoch" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
-    android:gravity="center"/>
-<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
-    />
-</LinearLayout> 
-<ScrollView
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5px"
+                android:gravity="center"
+                android:visibility="gone" >
+
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/mo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mo" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
+
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/di"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/di" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
+
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/mi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mi" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
+
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/don"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/don" android:textSize="29px" android:textStyle="bold" android:layout_marginRight="4px" android:background="@drawable/btn_not_selected"/>
+
+
+
+                <Button
+                    android:layout_weight="1"
+                    android:id="@+id/fr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fr" android:textSize="29px" android:textStyle="bold" android:background="@drawable/btn_not_selected"/>
+
+            </LinearLayout>
+
+            <ViewFlipper
+                android:id="@+id/viewFlipper1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0px">
 
                 <LinearLayout
-                    android:id="@+id/miv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                </LinearLayout>
-            </ScrollView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_header">
+        <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="Montag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+            android:gravity="center"/>
+        <TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+            />
         </LinearLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-<TextView 
-    android:layout_height="wrap_content" android:layout_width="wrap_content" 
-	android:text="Donnerstag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
-    android:gravity="center"/>
-<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
-    />
-</LinearLayout> 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                        <LinearLayout
+                            android:id="@+id/mov"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/dov"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical" >
-                </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
+        <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="Dienstag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+            android:gravity="center"/>
+        <TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+            />
+        </LinearLayout>             <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-<LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
-<TextView 
-    android:layout_height="wrap_content" android:layout_width="wrap_content" 
-	android:text="Freitag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
-    android:gravity="center"/>
-<TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
-    />
-</LinearLayout> 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                        <LinearLayout
+                            android:id="@+id/div"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/frv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" >
-                </LinearLayout>
-            </ScrollView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" ><LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="Mittwoch" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+            android:gravity="center"/>
+        <TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+            />
         </LinearLayout>
-    </ViewFlipper>
+        <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
 
-<RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-        
-</RelativeLayout>
-
+                        <LinearLayout
+                            android:id="@+id/miv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+        <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="Donnerstag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+            android:gravity="center"/>
+        <TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+            />
+        </LinearLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <LinearLayout
+                            android:id="@+id/dov"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+        <LinearLayout android:orientation="horizontal" android:layout_height="wrap_content" android:layout_width="fill_parent">
+        <TextView
+            android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="Freitag" android:textSize="35px" android:textStyle="bold"  android:textColor="#555555"
+            android:gravity="center"/>
+        <TextView android:layout_width="fill_parent" android:gravity="right" android:textStyle="bold" android:layout_height="wrap_content" android:textColor="#555555" android:text="(11.11.2011)" android:textSize="16px" android:paddingRight="10px"
+            />
+        </LinearLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+
+                        <LinearLayout
+                            android:id="@+id/frv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical" >
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
+            </ViewFlipper>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
 </LinearLayout>

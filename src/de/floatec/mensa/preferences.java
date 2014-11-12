@@ -27,7 +27,7 @@ public class Preferences extends PreferenceActivity  {
 		Preference customPref = (Preference) findPreference("mensa");
 
 		if(-1==Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("mensa", "-1")))
-			Toast.makeText(this, "Bitte Wähle eine Mensa aus!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Bitte WÃ¤hle eine Mensa aus!", Toast.LENGTH_LONG).show();
 
 	
     

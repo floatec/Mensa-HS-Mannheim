@@ -24,7 +24,7 @@ import android.util.Log;
  */
 public class MensaReader {
 	public static final int MENSA_HS=0,MENSA_DHMM=2,MENSA_DHKT=3,MENSA_MHS=4,MENSA_UNI=1;
-	public static final String[] MENSAS={"Hochschule Mannheim","Mensa am Schloss","DHBW Mensaria Metropol","DHBW Käfertaler Straße","Musikhochschule"};
+	public static final String[] MENSAS={"Hochschule Mannheim","Mensa am Schloss","DHBW Mensaria Metropol","DHBW KÃ¤fertaler StraÃŸe","Musikhochschule"};
 	public static final int DAY_MO = 0;
 	public static final int DAY_DI = 1;
 	public static final int DAY_MI = 2;
@@ -36,9 +36,9 @@ public class MensaReader {
 	private int week;
 	public boolean cache;
 	private String buffer = "";
-	private final static String[] URL= { "http://www.studentenwerk-mannheim.de/mensa/wo_hs.normal.php?+kw=", "http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php?+kw=","http://www.studentenwerk-mannheim.de/mensa/wo_dh_mm.normal.php?+kw=","http://www.studentenwerk-mannheim.de/mensa/wo_mas.dhk.php?+kw=","http://www.studentenwerk-mannheim.de/mensa/wo_mas.mhs.php?+kw="};
+	private final static String[] URL= { "https://www.stw-ma.de/mensa/wo_hs.normal.php?+kw=", "https://www.stw-ma.de/mensa/wo_mas.normal.php?+kw=","https://www.stw-ma.de/mensa/wo_dh_mm.normal.php?+kw=","https://www.stw-ma.de/mensa/wo_mas.dhk.php?+kw=","https://www.stw-ma.de/mensa/wo_mas.mhs.php?+kw="};
 	// String
-	// UNI_URL="http://www.studentenwerk-mannheim.de/mensa/wo_mas.normal.php";
+	// UNI_URL="https://www.stw-ma.de/mensa/wo_mas.normal.php";
 
 	public void setMensa(int mensa) {
 		this.mensa = mensa;
@@ -58,7 +58,7 @@ public class MensaReader {
 					buffer.indexOf("<div class='WoDate_hs'>")
 							+ "<div class='WoDate_hs'>".length() + 19);
 		} catch (Exception e) {
-			return "Datum nicht verfügbar";
+			return "Datum nicht verfï¿½gbar";
 		}
 	}
 
@@ -88,10 +88,20 @@ public class MensaReader {
 		return calendar.get(Calendar.WEEK_OF_YEAR) ;
 	}
 
+    /**
+            *
+            * @return aktuelle jahr
+            */
+    public int getYear() {
+
+
+        return calendar.get(Calendar.YEAR) ;
+    }
+
 	/**
 	 * nur implementiert wenn mehree wochen oder andere schulen hinzukommen
 	 * 
-	 * @return gibt die zu parsende url zurück
+	 * @return gibt die zu parsende url zurï¿½ck
 	 */
 	private String urlBuilder() {
 		return URL[mensa]+getKW();
@@ -129,7 +139,7 @@ public class MensaReader {
 	public MenuList readDay(int day) {
 		ml.clear();
 		if (buffer.length() == 0) {
-			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
+			ml.addmenu("ERROR", "Daten Nicht verfÃ¼gbar", "");
 			return ml;
 		}
 
@@ -144,13 +154,13 @@ public class MensaReader {
 			searchDay("Mittwoch");
 			break;
 		case DAY_DO:
-			searchDay("Donnerstag<");
+			searchDay("Donnerstag");
 			break;
 		case DAY_FR:
 			searchDay("Freitag");
 			break;
 		default:
-			ml.addmenu("ERROR", "Ungültiger Tag", "");
+			ml.addmenu("ERROR", "UngÃ¼ltiger Tag", "");
 			break;
 		}
 		return ml;
@@ -173,12 +183,12 @@ public class MensaReader {
 			return;
 		}
 		if(buffer.indexOf(day)==-1){
-			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
+			ml.addmenu("ERROR", "Daten Nicht verfÃ¼gbar", "");
 			return;
 		}
 		dayBuffer = buffer.substring(buffer.indexOf(day));
 		if(dayBuffer.indexOf("</tr>")==-1){
-			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
+			ml.addmenu("ERROR", "Daten Nicht verfÃ¼gbar", "");
 			return;
 		}
 		dayBuffer = dayBuffer.substring(0, dayBuffer.indexOf("</tr>"));
@@ -187,7 +197,7 @@ public class MensaReader {
 				.split("<td class='inh_1a oben rechts dickl'>|<td class='inh_1a oben rechts' nowrap='nowrap' width='50'>|</td><td class='inh_1a oben' width='125'>|<td class='inh_1a oben'>|<td width='' class='inh_1a oben rechts'>|<td class='inh_1a oben dickl' width='90'>|<td class='inh_1a oben links'>|<td class='inh_1a oben bo_re' nowrap='nowrap' width='33'>|<td class='inh_1a oben rechts' nowrap='nowrap' width='33'>|<td class='inh_1a oben' nowrap='nowrap' width='33'>|<td class='inh_1a oben rechts' nowrap='nowrap'>|<td width='' class='inh_1a oben rechts dickl'>|</h5>");
 		// Log.i("Mensa", menus.length+dayBuffer);
 		if (menus.length<5 ) {
-			ml.addmenu("ERROR", "Daten Nicht verfügbar", "");
+			ml.addmenu("ERROR", "Daten Nicht verfÃ¼gbar", "");
 			return;
 		}
 		for (int i = 0; i < menus.length; i++) {
@@ -196,7 +206,7 @@ public class MensaReader {
 		}
 		for (int i = 1; i < menus.length-1; i=i+2) {
 			
-			Matcher matcher = Pattern.compile("[0-9]+,[0-9]{2} €").matcher(menus[i]+menus[i+1]);
+			Matcher matcher = Pattern.compile("[0-9]+,[0-9]{2} â‚¬").matcher(menus[i]+menus[i+1]);
 			
 			String price="";
 			if(matcher.find())
@@ -205,19 +215,19 @@ public class MensaReader {
 	        menus[i+1] = price;
 	        
 		}
-		// fügt menüs der liste hinzu
+		// fï¿½gt menï¿½s der liste hinzu
 		if(mensa==MENSA_HS){
 			ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
-			ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
-			ml.addmenu("Menü 2", html2plain(menus[5]), html2plain(menus[6]));
+			ml.addmenu("MenÃ¼ 1", html2plain(menus[3]), html2plain(menus[4]));
+			ml.addmenu("MenÃ¼ 2", html2plain(menus[5]), html2plain(menus[6]));
 			ml.addmenu("Aktion", html2plain(menus[9]), html2plain(menus[10]));
 			ml.addmenu("Wok", html2plain(menus[11]), html2plain(menus[12]));
 			ml.addmenu("Dessert", html2plain(menus[7]), html2plain(menus[8]));
 		}
 if(mensa==MENSA_UNI){
 			ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
-			ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
-			ml.addmenu("Menü 2", html2plain(menus[5]), html2plain(menus[6]));
+			ml.addmenu("MenÃ¼ 1", html2plain(menus[3]), html2plain(menus[4]));
+			ml.addmenu("MenÃ¼ 2", html2plain(menus[5]), html2plain(menus[6]));
 			ml.addmenu("Grill", html2plain(menus[7]), html2plain(menus[8]));
 			ml.addmenu("Pasta", html2plain(menus[9]), html2plain(menus[10]));
 			ml.addmenu("Aktion", html2plain(menus[11]), html2plain(menus[12]));
@@ -225,12 +235,12 @@ if(mensa==MENSA_UNI){
 		}
 if(mensa==MENSA_DHMM){
 	ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
-	ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
-	ml.addmenu("Menü 2", html2plain(menus[5]), html2plain(menus[6]));
+	ml.addmenu("MenÃ¼ 1", html2plain(menus[3]), html2plain(menus[4]));
+	ml.addmenu("MenÃ¼ 2", html2plain(menus[5]), html2plain(menus[6]));
 }
 if(mensa==MENSA_DHKT||mensa==MENSA_MHS){
 	ml.addmenu("Vegetarisch", html2plain(menus[1]), html2plain(menus[2]));
-	ml.addmenu("Menü 1", html2plain(menus[3]), html2plain(menus[4]));
+	ml.addmenu("MenÃ¼ 1", html2plain(menus[3]), html2plain(menus[4]));
 	
 }
 	}
@@ -267,9 +277,9 @@ if(mensa==MENSA_DHKT||mensa==MENSA_MHS){
 	}
 
 	/**
-	 * läd daten in buffer
+	 * lï¿½d daten in buffer
 	 * 
-	 * @param html
+	 *
 	 * @param useCache
 	 * @return
 	 */
@@ -277,13 +287,13 @@ if(mensa==MENSA_DHKT||mensa==MENSA_MHS){
 		String html=urlBuilder();
 		StringBuilder filebufer = new StringBuilder();
 		// cache
-		File file = new File("/data/data/de.floatec.mensa/"+mensa+"KW" + getKW());
+		File file = new File("/data/data/de.floatec.mensa/"+getYear()+mensa+"KW" + getKW());
 		/* if cache is avalible and it should be used */
 		if (file.exists() && useCache) {
 			try {
 				/*read cache*/
 				BufferedReader br = new BufferedReader(new FileReader(
-						"/data/data/de.floatec.mensa/"+mensa+"KW" + getKW()));
+						"/data/data/de.floatec.mensa/"+getYear()+mensa+"KW" + getKW()));
 				String line = br.readLine();
 				while (line != null) {
 					filebufer.append(line);

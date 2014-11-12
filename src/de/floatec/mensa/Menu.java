@@ -3,7 +3,7 @@ package de.floatec.mensa;
 import java.util.ArrayList;
 
 /**
- * klasse für ein einzelnes menü
+ * klasse fur ein einzelnes menu
  * @author kcirta
  *
  */

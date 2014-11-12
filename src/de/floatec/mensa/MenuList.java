@@ -2,7 +2,7 @@ package de.floatec.mensa;
 
 import java.util.ArrayList;
 /**
- *  listen element für menüs
+ *  listen element ffr menus
  * @author kcirta
  *
  */
